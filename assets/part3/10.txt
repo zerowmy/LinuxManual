@@ -1,0 +1,13 @@
+﻿3.3.1 /etc/sysconfig/network 网络设置
+该文件用来指定服务器上的网络配置信息 包含了控制和网络有关的文件和
+守护程序的行为的参数 下面是一个例子文件
+NETWORKING=yes
+HOSTNAME=machine1
+GATEWAY=210.34.6.2
+FORWARD_IPV4=yes
+GATEWAYDEV=
+其中 NETWORK=yes/no 表示网络是否被配置
+HOSTNAME=hostname hostname 表示服务器的主机名
+GATEWAY=gw-ip gw-ip 表示网络网关的 IP 地址
+FORWARD_IPV4=yes/no 是否开启 IP 转发功能
+GAREWAYDEV=gw-dev gw-dw 表示网关的设备名 如 eth0 等

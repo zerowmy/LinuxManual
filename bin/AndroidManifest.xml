@@ -1,0 +1,83 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.zero.linuxstudy"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="19" />
+
+    <application
+		android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+		>
+        
+         <!--//强制竖屏 portrait     //强制横屏landscape  //sensor由物理的感应器来决定
+			android:screenOrientation="landscape"
+			android:screenOrientation="portrait" -->
+        <activity
+            android:screenOrientation="user"
+            android:label="@string/app_name"
+            android:name="com.zero.linuxstudy.MianActivity" >
+            <intent-filter >
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+			android:label="@string/about"
+			android:theme="@android:style/Theme.Holo"
+            android:name="com.zero.linuxstudy.AboutActivity" >
+        </activity>
+        <activity
+			android:label="@string/author"
+			android:theme="@android:style/Theme.Holo"
+            android:name="com.zero.linuxstudy.AuthorActivity" >
+        </activity>
+        <activity
+            android:label="@string/readMenu"
+			android:theme="@android:style/Theme.Holo"
+            android:name="com.zero.linuxstudy.ReadMenuActivity" >
+        </activity>
+        
+        <activity
+            android:label="@string/part1"
+			android:theme="@android:style/Theme.Holo"
+            android:name="com.zero.linuxstudy.Part1Activity" >
+        </activity>
+        <activity
+            android:label="@string/part2"
+			android:theme="@android:style/Theme.Holo"
+            android:name="com.zero.linuxstudy.Part2Activity" >
+        </activity>
+        <activity
+            android:label="@string/part3"
+			android:theme="@android:style/Theme.Holo"
+            android:name="com.zero.linuxstudy.Part3Activity" >
+        </activity>
+        <activity
+            android:label="@string/part4"
+			android:theme="@android:style/Theme.Holo"
+            android:name="com.zero.linuxstudy.Part4Activity" >
+        </activity>
+        <activity
+            android:label="@string/part5"
+			android:theme="@android:style/Theme.Holo"
+            android:name="com.zero.linuxstudy.Part5Activity" >
+        </activity>
+        <activity
+            android:label="@string/part6"
+			android:theme="@android:style/Theme.Holo"
+            android:name="com.zero.linuxstudy.Part6Activity" >
+        </activity>
+        
+        <activity
+			android:label="@string/voiceRead"
+			android:theme="@android:style/Theme.Holo"
+            android:name="com.zero.linuxstudy.ShowText" >
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,12 @@
+﻿3.3.9 /etc/sysconfig/network-scripts/ifcfg-ethN 文件 
+系统网络设备的配置文件保存在 /etc/sysconfig/network-scripts”目录下
+ifcfg-eth0包含第一块网卡的配置信息 ifcfg-eth1包含第二块网卡的配置信息
+下面是“/etc/sysconfig/network-scripts/ifcfg-eth0”文件的示例
+DEVICE=eth0
+ONBOOT=yes
+BOOTPROTO=static
+IPADDR=192.168.0.66
+NETMASK=255.255.255.0
+GATEWAY=192.168.0.65
+若希望手工修改网络地址或在新的接口上增加新的网络界面 可以通过修改
+对应的文件 ifcfg-ethN 或创建新的文件来实现

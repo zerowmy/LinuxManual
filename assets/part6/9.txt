@@ -1,0 +1,605 @@
+# [馬哥Linux]視頻學習筆記9——Linux文本處理命令詳解「重要」
+
+@(標籤)[cat|tac|more|less|head|tail|cut|join|sed|awk|cut|sort|uniq|wc|tr]
+
+#### Tables Of Contents
+1. [技術人員的成長道路](#技術人員的成長道路) 
+2. [課程預告](#課程預告) 
+3. [文本處理命令](#文本處理命令) 
+3.1 [cat命令](#cat命令) 
+3.2 [tac命令](#tac命令) 
+3.3 [分頁顯示more、less](#分頁顯示more-less) 
+3.4 [文本處理cut、join、sed、awk](#文本處理cut-join-sed-awk) 
+3.5 [cut命令](#cut命令) 
+3.6 [文本排序：sort](#文本排序-sort) 
+3.7 [uniq命令](#uniq命令) 
+3.8 [文本統計：wc (word count)](#wc) 
+3.9 [字處理命令tr](#字處理命令tr) 
+
+
+
+---
+
+#### 技術人員的成長道路
+
+>1.找方向
+昨夜西風凋碧樹，獨上高樓，望盡天涯路。
+2.持之以恆
+衣帶漸寬終不悔，爲伊消得人憔悴。
+3.驀然回首
+衆裏尋他千百度，驀然回首，那人卻在燈火闌珊處。
+
+**選擇什麼並不重要，重要的是選擇後持之以恆的努力。**
+
+---
+
+#### 課程預告
+```
+文本處理：cat,more,less,head,tail,cut,sort,uniq,grep
+    正則表達式
+管道和重定向：> < >> <<
+用戶、組、權限
+bash及其特性
+```
+
+>Linux,GNU：GNU/Linux，源代碼
+發行版：Fodora,RedHat(CentOS),SUSE,Debian(Ubuntu,Mint),Gentoo,LFS
+
+LFS (Linux From Scratch)
+<http://www.linuxfromscratch.org/>
+
+---
+
+#### 文本處理命令
+```
+查看文本
+cat
+tac
+more
+less
+head
+tail
+```
+
+##### cat命令
+```
+cat 
+    - concatenate files and print on the standard output
+命令
+cat [OPTION]... [FILE]...
+    -E, --show-ends  Linux中文本的行結束符是'$'
+        display $ at end of each line
+
+    -n, --number 顯示行號
+        number all output lines
+```
+
+```
+[root@localhost ~]# cat /etc/issue
+\S
+Kernel \r on an \m
+
+[root@localhost ~]# cat -n /etc/issue
+     1  \S
+     2  Kernel \r on an \m
+     3  
+[root@localhost ~]# cat -E /etc/issue
+\S$
+Kernel \r on an \m$
+$
+[root@localhost ~]#
+```
+
+##### tac命令
+```
+命令
+tac [OPTION]... [FILE]...
+
+tac - concatenate and print files in reverse
+```
+
+<span id="分頁顯示more-less"></span>
+##### 分頁顯示more、less
+```
+more：向後翻
+more - file perusal filter for crt viewing
+more [options] file [...]
+```
+
+```
+less：
+less - opposite of more
+```
+
+```
+head：查看文件前n行
+    -n
+tail：查看文件後n行
+    -n
+
+tail - output the last part of files
+tail [OPTION]... [FILE]...
+    -f, --follow[={name|descriptor}]
+        output appended data as the file grows;
+        an absent option argument means 'descriptor'
+
+tail -f：查看文件尾部，不退出，等待顯示後續追加至此文件的新內容
+```
+
+<span id="文本處理cut-join-sed-awk"></span>
+##### 文本處理cut、join、sed、awk
+>database：數據庫
+關係型數據庫：
+表：二維表
+
+文本文件
+
+
+##### cut命令
+```
+cut - remove sections from each line of files
+cut OPTION... [FILE]...
+    -d, --delimiter=DELIM    指定字段分隔符，默認是空格
+        use DELIM instead of TAB for field delimiter
+
+    -f, --fields=LIST    指定要顯示的字段
+        select only these fields;  also print any line that contains  no delimiter character, 
+        unless the -s option is specified
+
+    -s, --only-delimited
+        do not print lines not containing delimiters
+```
+
+```
+    -f 1     顯示第1個
+    -f 1,3   顯示第1個、第3個
+    -f 1-3   顯示第1-3個，即第1、2、3個
+//-f 1
+[root@localhost ~]# cut -d : -f 1 /etc/passwd
+root
+bin
+daemon
+adm
+...
+[root@localhost ~]# 
+
+//-f 1,3
+[root@localhost ~]# cut -d : -f 1,3 /etc/passwd
+root:0
+bin:1
+daemon:2
+adm:3
+...
+[root@localhost ~]# 
+
+//-f 1-3
+[root@localhost ~]# cut -d : -f 1-3 /etc/passwd
+root:x:0
+bin:x:1
+daemon:x:2
+adm:x:3
+...
+[root@localhost ~]#
+```
+
+<span id="文本排序-sort"></span>
+##### 文本排序：sort
+```
+sort - sort lines of text files
+sort [OPTION]... [FILE]...
+sort [OPTION]... --files0-from=F
+    默認按ASCII碼排序，逐個比較
+    -n, --numeric-sort          按數值大小排序
+        compare according to string numerical value
+
+    -r, --reverse               逆序
+        reverse the result of comparisons
+
+    -t, --field-separator=SEP   指定字段分隔符
+        use SEP instead of non-blank to blank transition
+
+    -k, --key=KEYDEF            以哪個字段爲關鍵字進行排序
+        sort via a key; KEYDEF gives location and type
+
+    -u, --unique                排序後，相同的行只顯示一次
+        with -c, check for strict ordering; without -c, 
+        output only  the first of an equal run
+
+    -f, --ignore-case           排序是忽略字符大小寫
+        fold lower case to upper case characters
+```
+
+```
+[root@localhost ~]# nano /mnt/linux
+[root@localhost ~]# sort /mnt/linux
+111
+123
+234
+234
+456
+76
+897
+[root@localhost ~]# sort -n /mnt/linux
+76
+111
+123
+234
+234
+456
+897
+[root@localhost ~]# sort -r /mnt/linux
+897
+76
+456
+234
+234
+123
+111
+[root@localhost ~]#
+```
+
+```
+//sort 默認ASCII逐個排序
+[root@localhost ~]# sort /etc/passwd
+abrt:x:173:173::/etc/abrt:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+amandabackup:x:33:6:Amanda user:/var/lib/amanda:/bin/bash
+avahi-autoipd:x:170:170:Avahi IPv4LL Stack:/var/lib/avahi-autoipd:/sbin/nologin
+avahi:x:70:70:Avahi mDNS/DNS-SD Stack:/var/run/avahi-daemon:/sbin/nologin
+bin:x:1:1:bin:/bin:/sbin/nologin
+chrony:x:994:993::/var/lib/chrony:/sbin/nologin
+colord:x:997:995:User for colord:/var/lib/colord:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+dbus:x:81:81:System message bus:/:/sbin/nologin
+ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+games:x:12:100:games:/usr/games:/sbin/nologin
+gdm:x:42:42::/var/lib/gdm:/sbin/nologin
+gnome-initial-setup:x:993:991::/run/gnome-initial-setup/:/sbin/nologin
+halt:x:7:0:halt:/sbin:/sbin/halt
+libstoragemgmt:x:995:994:daemon account for libstoragemgmt:/var/run/lsm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+mysql:x:1001:1001::/home/mysql:/bin/false
+nfsnobody:x:65534:65534:Anonymous NFS User:/var/lib/nfs:/sbin/nologin
+nobody:x:99:99:Nobody:/:/sbin/nologin
+ntp:x:38:38::/etc/ntp:/sbin/nologin
+operator:x:11:0:operator:/root:/sbin/nologin
+polkitd:x:999:998:User for polkitd:/:/sbin/nologin
+postfix:x:89:89::/var/spool/postfix:/sbin/nologin
+pulse:x:171:171:PulseAudio System Daemon:/var/run/pulse:/sbin/nologin
+qemu:x:107:107:qemu user:/:/sbin/nologin
+radvd:x:75:75:radvd user:/:/sbin/nologin
+root:x:0:0:root:/root:/bin/bash
+rpcuser:x:29:29:RPC Service User:/var/lib/nfs:/sbin/nologin
+rpc:x:32:32:Rpcbind Daemon:/var/lib/rpcbind:/sbin/nologin
+rtkit:x:172:172:RealtimeKit:/proc:/sbin/nologin
+saslauth:x:996:76:"Saslauthd user":/run/saslauthd:/sbin/nologin
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin
+sync:x:5:0:sync:/sbin:/bin/sync
+tcpdump:x:72:72::/:/sbin/nologin
+unbound:x:998:996:Unbound DNS resolver:/etc/unbound:/sbin/nologin
+usbmuxd:x:113:113:usbmuxd user:/:/sbin/nologin
+www:x:1002:1002::/home/www:/bin/false
+
+
+//sort -n  按數值排序
+[root@localhost ~]# sort -n /etc/passwd
+abrt:x:173:173::/etc/abrt:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+amandabackup:x:33:6:Amanda user:/var/lib/amanda:/bin/bash
+avahi-autoipd:x:170:170:Avahi IPv4LL Stack:/var/lib/avahi-autoipd:/sbin/nologin
+avahi:x:70:70:Avahi mDNS/DNS-SD Stack:/var/run/avahi-daemon:/sbin/nologin
+bin:x:1:1:bin:/bin:/sbin/nologin
+chrony:x:994:993::/var/lib/chrony:/sbin/nologin
+colord:x:997:995:User for colord:/var/lib/colord:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+dbus:x:81:81:System message bus:/:/sbin/nologin
+ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+games:x:12:100:games:/usr/games:/sbin/nologin
+gdm:x:42:42::/var/lib/gdm:/sbin/nologin
+gnome-initial-setup:x:993:991::/run/gnome-initial-setup/:/sbin/nologin
+halt:x:7:0:halt:/sbin:/sbin/halt
+libstoragemgmt:x:995:994:daemon account for libstoragemgmt:/var/run/lsm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+mysql:x:1001:1001::/home/mysql:/bin/false
+nfsnobody:x:65534:65534:Anonymous NFS User:/var/lib/nfs:/sbin/nologin
+nobody:x:99:99:Nobody:/:/sbin/nologin
+ntp:x:38:38::/etc/ntp:/sbin/nologin
+operator:x:11:0:operator:/root:/sbin/nologin
+polkitd:x:999:998:User for polkitd:/:/sbin/nologin
+postfix:x:89:89::/var/spool/postfix:/sbin/nologin
+pulse:x:171:171:PulseAudio System Daemon:/var/run/pulse:/sbin/nologin
+qemu:x:107:107:qemu user:/:/sbin/nologin
+radvd:x:75:75:radvd user:/:/sbin/nologin
+root:x:0:0:root:/root:/bin/bash
+rpcuser:x:29:29:RPC Service User:/var/lib/nfs:/sbin/nologin
+rpc:x:32:32:Rpcbind Daemon:/var/lib/rpcbind:/sbin/nologin
+rtkit:x:172:172:RealtimeKit:/proc:/sbin/nologin
+saslauth:x:996:76:"Saslauthd user":/run/saslauthd:/sbin/nologin
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin
+sync:x:5:0:sync:/sbin:/bin/sync
+tcpdump:x:72:72::/:/sbin/nologin
+unbound:x:998:996:Unbound DNS resolver:/etc/unbound:/sbin/nologin
+usbmuxd:x:113:113:usbmuxd user:/:/sbin/nologin
+www:x:1002:1002::/home/www:/bin/false
+
+//sort -r 逆序
+[root@localhost ~]# sort -r /etc/passwd
+www:x:1002:1002::/home/www:/bin/false
+usbmuxd:x:113:113:usbmuxd user:/:/sbin/nologin
+unbound:x:998:996:Unbound DNS resolver:/etc/unbound:/sbin/nologin
+tcpdump:x:72:72::/:/sbin/nologin
+sync:x:5:0:sync:/sbin:/bin/sync
+sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+saslauth:x:996:76:"Saslauthd user":/run/saslauthd:/sbin/nologin
+rtkit:x:172:172:RealtimeKit:/proc:/sbin/nologin
+rpc:x:32:32:Rpcbind Daemon:/var/lib/rpcbind:/sbin/nologin
+rpcuser:x:29:29:RPC Service User:/var/lib/nfs:/sbin/nologin
+root:x:0:0:root:/root:/bin/bash
+radvd:x:75:75:radvd user:/:/sbin/nologin
+qemu:x:107:107:qemu user:/:/sbin/nologin
+pulse:x:171:171:PulseAudio System Daemon:/var/run/pulse:/sbin/nologin
+postfix:x:89:89::/var/spool/postfix:/sbin/nologin
+polkitd:x:999:998:User for polkitd:/:/sbin/nologin
+operator:x:11:0:operator:/root:/sbin/nologin
+ntp:x:38:38::/etc/ntp:/sbin/nologin
+nobody:x:99:99:Nobody:/:/sbin/nologin
+nfsnobody:x:65534:65534:Anonymous NFS User:/var/lib/nfs:/sbin/nologin
+mysql:x:1001:1001::/home/mysql:/bin/false
+mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+libstoragemgmt:x:995:994:daemon account for libstoragemgmt:/var/run/lsm:/sbin/nologin
+halt:x:7:0:halt:/sbin:/sbin/halt
+gnome-initial-setup:x:993:991::/run/gnome-initial-setup/:/sbin/nologin
+gdm:x:42:42::/var/lib/gdm:/sbin/nologin
+games:x:12:100:games:/usr/games:/sbin/nologin
+ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+dbus:x:81:81:System message bus:/:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+colord:x:997:995:User for colord:/var/lib/colord:/sbin/nologin
+chrony:x:994:993::/var/lib/chrony:/sbin/nologin
+bin:x:1:1:bin:/bin:/sbin/nologin
+avahi:x:70:70:Avahi mDNS/DNS-SD Stack:/var/run/avahi-daemon:/sbin/nologin
+avahi-autoipd:x:170:170:Avahi IPv4LL Stack:/var/lib/avahi-autoipd:/sbin/nologin
+amandabackup:x:33:6:Amanda user:/var/lib/amanda:/bin/bash
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+abrt:x:173:173::/etc/abrt:/sbin/nologin
+
+
+//sort -t : -k 3 以：爲分隔符，按第3個字段排序
+[root@localhost ~]# sort -t : -k 3 /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+mysql:x:1001:1001::/home/mysql:/bin/false
+www:x:1002:1002::/home/www:/bin/false
+qemu:x:107:107:qemu user:/:/sbin/nologin
+operator:x:11:0:operator:/root:/sbin/nologin
+usbmuxd:x:113:113:usbmuxd user:/:/sbin/nologin
+bin:x:1:1:bin:/bin:/sbin/nologin
+games:x:12:100:games:/usr/games:/sbin/nologin
+ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+avahi-autoipd:x:170:170:Avahi IPv4LL Stack:/var/lib/avahi-autoipd:/sbin/nologin
+pulse:x:171:171:PulseAudio System Daemon:/var/run/pulse:/sbin/nologin
+rtkit:x:172:172:RealtimeKit:/proc:/sbin/nologin
+abrt:x:173:173::/etc/abrt:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+rpcuser:x:29:29:RPC Service User:/var/lib/nfs:/sbin/nologin
+rpc:x:32:32:Rpcbind Daemon:/var/lib/rpcbind:/sbin/nologin
+amandabackup:x:33:6:Amanda user:/var/lib/amanda:/bin/bash
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+ntp:x:38:38::/etc/ntp:/sbin/nologin
+gdm:x:42:42::/var/lib/gdm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+sync:x:5:0:sync:/sbin:/bin/sync
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+nfsnobody:x:65534:65534:Anonymous NFS User:/var/lib/nfs:/sbin/nologin
+avahi:x:70:70:Avahi mDNS/DNS-SD Stack:/var/run/avahi-daemon:/sbin/nologin
+halt:x:7:0:halt:/sbin:/sbin/halt
+tcpdump:x:72:72::/:/sbin/nologin
+sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin
+radvd:x:75:75:radvd user:/:/sbin/nologin
+mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+dbus:x:81:81:System message bus:/:/sbin/nologin
+postfix:x:89:89::/var/spool/postfix:/sbin/nologin
+gnome-initial-setup:x:993:991::/run/gnome-initial-setup/:/sbin/nologin
+chrony:x:994:993::/var/lib/chrony:/sbin/nologin
+libstoragemgmt:x:995:994:daemon account for libstoragemgmt:/var/run/lsm:/sbin/nologin
+saslauth:x:996:76:"Saslauthd user":/run/saslauthd:/sbin/nologin
+colord:x:997:995:User for colord:/var/lib/colord:/sbin/nologin
+unbound:x:998:996:Unbound DNS resolver:/etc/unbound:/sbin/nologin
+polkitd:x:999:998:User for polkitd:/:/sbin/nologin
+nobody:x:99:99:Nobody:/:/sbin/nologin
+
+
+//sort -n -t : -k 3  以：爲分隔符，按第3個字段進行數值排序
+[root@localhost ~]# sort -n -t : -k 3 /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+sync:x:5:0:sync:/sbin:/bin/sync
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+halt:x:7:0:halt:/sbin:/sbin/halt
+mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+operator:x:11:0:operator:/root:/sbin/nologin
+games:x:12:100:games:/usr/games:/sbin/nologin
+ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+rpcuser:x:29:29:RPC Service User:/var/lib/nfs:/sbin/nologin
+rpc:x:32:32:Rpcbind Daemon:/var/lib/rpcbind:/sbin/nologin
+amandabackup:x:33:6:Amanda user:/var/lib/amanda:/bin/bash
+ntp:x:38:38::/etc/ntp:/sbin/nologin
+gdm:x:42:42::/var/lib/gdm:/sbin/nologin
+avahi:x:70:70:Avahi mDNS/DNS-SD Stack:/var/run/avahi-daemon:/sbin/nologin
+tcpdump:x:72:72::/:/sbin/nologin
+sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin
+radvd:x:75:75:radvd user:/:/sbin/nologin
+dbus:x:81:81:System message bus:/:/sbin/nologin
+postfix:x:89:89::/var/spool/postfix:/sbin/nologin
+nobody:x:99:99:Nobody:/:/sbin/nologin
+qemu:x:107:107:qemu user:/:/sbin/nologin
+usbmuxd:x:113:113:usbmuxd user:/:/sbin/nologin
+avahi-autoipd:x:170:170:Avahi IPv4LL Stack:/var/lib/avahi-autoipd:/sbin/nologin
+pulse:x:171:171:PulseAudio System Daemon:/var/run/pulse:/sbin/nologin
+rtkit:x:172:172:RealtimeKit:/proc:/sbin/nologin
+abrt:x:173:173::/etc/abrt:/sbin/nologin
+gnome-initial-setup:x:993:991::/run/gnome-initial-setup/:/sbin/nologin
+chrony:x:994:993::/var/lib/chrony:/sbin/nologin
+libstoragemgmt:x:995:994:daemon account for libstoragemgmt:/var/run/lsm:/sbin/nologin
+saslauth:x:996:76:"Saslauthd user":/run/saslauthd:/sbin/nologin
+colord:x:997:995:User for colord:/var/lib/colord:/sbin/nologin
+unbound:x:998:996:Unbound DNS resolver:/etc/unbound:/sbin/nologin
+polkitd:x:999:998:User for polkitd:/:/sbin/nologin
+mysql:x:1001:1001::/home/mysql:/bin/false
+www:x:1002:1002::/home/www:/bin/false
+nfsnobody:x:65534:65534:Anonymous NFS User:/var/lib/nfs:/sbin/nologin
+[root@localhost ~]#
+```
+
+##### uniq命令
+```
+uniq - report or omit repeated lines  報告重複的行
+註：相鄰的2行纔被算作是重複
+    -c, --count          顯示文件中行重複的次數
+        prefix lines by the number of occurrences
+
+    -d, --repeated       只顯示重複的行
+        only print duplicate lines, one for each group
+
+    -D, --all-repeated[=METHOD]
+         print  all duplicate lines groups can be delimited with an empty line METHOD={none(default),prepend,separate}
+```
+
+```
+[root@localhost ~]# sort /mnt/linux
+12
+123
+123
+321
+345
+345
+456
+456
+456
+456
+8
+[root@localhost ~]# uniq /mnt/linux
+12
+123
+345
+8
+345
+456
+321
+456
+[root@localhost ~]# uniq -c /mnt/linux
+     1 12
+      2 123
+      1 345
+      1 8
+      1 345
+      1 456
+      1 321
+      3 456
+[root@localhost ~]# uniq -d /mnt/linux
+123
+456
+[root@localhost ~]#
+```
+
+<span id="wc"></span>
+##### 文本統計：wc (word count)
+```
+空白也是字符
+wc - print newline, word, and byte counts for each file
+              行    單詞數     字節數
+    -c, --bytes    字節數
+        print the byte counts
+
+    -m, --chars    字符數
+        print the character counts
+
+    -l, --lines    行數
+        print the newline counts
+
+    -L, --max-line-length
+        print the length of the longest line
+```
+
+```
+[root@localhost ~]# cat /mnt/linux
+a 12
+123
+123
+345
+82
+345
+456
+321
+456
+49
+[root@localhost ~]# wc /mnt/linux
+10 11 39 /mnt/linux
+[root@localhost ~]# wc -l /mnt/linux
+10 /mnt/linux
+[root@localhost ~]# wc -w /mnt/linux
+11 /mnt/linux
+[root@localhost ~]# wc -c /mnt/linux
+39 /mnt/linux
+[root@localhost ~]#
+```
+
+##### 字處理命令tr
+
+>tr – translate or delete characters 轉換或刪除字符
+tr [OPTION]… SET1 [SET2]
+
+```
+-d, --delete    刪除出現在字符集中的所有字符
+        delete characters in SET1, do not translate
+```
+
+```
+//替換
+[root@localhost ~]# cat /mnt/linux
+hello,linux，
+i am a new learner，
+linux is very interesting。
+[root@localhost ~]# tr 'a-z' 'A-Z' < /mnt/linux
+HELLO,LINUX，
+I AM A NEW LEARNER，
+LINUX IS VERY INTERESTING。
+[root@localhost ~]# tr 'hli' 'HLI' < /mnt/linux
+HeLLo,LInux，
+I am a new Learner，
+LInux Is very InterestIng。
+[root@localhost ~]# tr 'h' 'H' < /mnt/linux
+Hello,linux，
+i am a new learner，
+linux is very interesting。
+[root@localhost ~]# 
+
+
+//刪除
+[root@localhost ~]# tr -d 'linux'
+hellolinuxhaha
+heohaha
+you like linux is
+yo ke  s
+^C
+[root@localhost ~]#
+```
+  
+
+---
+
+**Note Time**：2015.02.08 17:04 Sunday 上海
+
+---
+
+`Blog Url`:<http://qingtianjiedu.com/blog/magedu_linux_learn_note_9/>
+`Release Time`:2015-02-08
+`BackUpTime`:2015.11.06 16:17

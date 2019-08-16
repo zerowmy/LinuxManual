@@ -1,0 +1,49 @@
+﻿3.1.2 route
+route 命令的语法为
+route [-CFvnee]
+route [-v] [-A family] add [-net|-host] target [netmask Nm] [gw Gw]
+[metric N] [mod] [reinstate] [[dev] If]
+route [-v] [-A family] del [-net|-host] target [gw Gw] [netmask Nm] [metric
+N] [[dev] If]
+route [-V] [--version] [-h] [--help]
+route 的常用参数说明如下
+-v 使用冗余输出模式
+-A family 指定特定的地址族 例如"inet" "inet6"
+-n 使用数字显示的地址 例如 202.38.75.75 而不是去解释域名
+-e 使用与 netstat 相同的输出格式
+-ee 参数会产生很长的输出 包括内核路由表的几乎所有信息
+-net 目标 target 是一个网段
+-host 目标 target 是一个单独的主机
+-F 显示内核 FIB 路由表 结果可能被-e 和-ee 参数改变
+-C 显示内核中路由缓存信息
+del 删除一个路由表项
+add 增加一个路由表项
+Target  配置的目的网段或者主机 可以是 IP 或者是网络或主机名
+netmask Nm 用来指明要添加的路由表项的网络掩码
+gw Gw 任何通往目的 target  的 IP 分组都要通过这个网关
+metric M 设置路由表中该项的尺度域 metric field 为 M
+示例
+1 添加一条路由表项 网段 192.168.0.x 应该从接口"eth0"走
+route add -net 192.168.0.0 netmask 255.255.255.0 dev eth0
+2 添加一条缺省路由
+route add 0.0.0.0 gw 网关地址
+如果没有其他匹配的路由项 就使用这个路由规则
+3 删除缺省路由
+route del 0.0.0.0 gw 网关地址
+4 route 命令的输出结果示例说明
+输出的格式有以下几栏
+Destination 目标网段或者主机
+Gateway 网关地址 如果没有设置 则是"*"表示
+Genmask  网络掩码
+Flags 一些可能的标记如下
+U 路由是活动的
+H 目标是一个主机
+G 使用网关 gateway
+R reinstate route 动态路由产生的表项
+D dynamically installed by daemon or redirect
+M modified from routing daemon or redirect
+! reject route
+Metric 路由距离
+Ref 路由项引用次数 linux内核中没有使用
+Use 查找路由项的次数 .
+Iface 该路由表项对应的输出接口

@@ -1,0 +1,15 @@
+﻿4.6.1 服务简介
+Linux系统服务是在 Linux启动时自动加载 并在 Linux退出时自动停止的系
+统任务 在 Linux启动过程中 我们可以看得很多 starting … 提示信息
+该信息表示正在启动系统服务 而在 Linux 退出时 我们也能够看到相应的
+Stopping … 信息 表示系统服务正在停止 Linux自身有许多系统任务
+如 network 服务用于支持网络连接等 CAMS在安装过程中 会自动加入
+三个系统任务 以保证在 Linux启动时 CAMS 服务自动启动 而在 Linux关
+闭时 CAMS服务也自动停止 这三个服务分别时
+oracled Oracle 数据库服务
+camsd  CAMS协议处理模块服务
+tomcat4 Tomcat Web Server 服务 用于支持 CAMS配置管理台 自助
+服务平台 Portal 服务平台及内容计费认证平台等
+Linux系统的所有服务程序脚本均可以在 /etc/rc.d/init.d 文件夹中找到 每
+一项服务对应一个脚本文件 如果 CAMS 已经安装 我们可以在该文件夹下
+找到 oracled camsd 和 tomcat4 这三个文件

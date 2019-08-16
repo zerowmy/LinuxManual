@@ -1,0 +1,4 @@
+﻿3.3.8 /etc/modules.conf 文件
+该配置文件定义了各种需要在启动时加载的模块的参数信息 文件格式如下
+alias eth0 tg3
+alias eth1 3c905

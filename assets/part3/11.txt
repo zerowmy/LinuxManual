@@ -1,0 +1,17 @@
+﻿3.3.2 /etc/hosts IP 地址和主机名的映射
+/etc/hosts 中包含了 IP 地址和主机名之间的映射 还包括主机名的别名 IP
+地址的设计使计算机容易识别 但对于人却很难记住它们 为了解决这个问
+题 创建了/etc/hosts 这个文件 下面是一个例子文件
+127.0.0.1 machine1 localhost.localdomain localhost
+192.168.1.100 machine7
+192.168.1.101 otherpc otheralias
+在这个例子中 本机名是 machine1 otherpc 还有别名 otheralias 它可以指
+向 otheralias 一旦配置完机器的网络配置文件 应该重新启动网络以使修
+改生效 使用下面的命令来重新启动网络
+service network restart
+/etc/hosts文件通常含有主机名 localhost和系统管理员经常使用的系统别名
+有时候 telnet到 Linux机器要等待很长时间 可以通过在"/etc/hosts"加入客户
+的机器的 IP 地址和主机名的匹配项 就可以减少登录等待时间 在没有域名
+服务器情况下 系统上的所有网络程序都通过查询该文件来解析对应于某个
+主机名的 IP 地址 否则 其他的主机名通常使用 DNS 来解决 DNS 客户部
+分的配置在文件/etc/resolv.conf 中

@@ -1,0 +1,13 @@
+﻿3.3.3 /etc/services
+/etc/services 中包含了服务名和端口号之间的映射 不少的系统程序要使用这
+个文件 下面是 RedHat 安装时缺省的/etc/services 中的前几行
+tcpmux 1/tcp # TCP port service multiplexer
+echo 7/tcp
+echo 7/udp
+discard 9/tcp sink null
+discard 9/udp sink null
+systat 11/tcp users
+最左边一列是主机服务名 中间一列是端口号 / 后面是端口类型 可以
+是 TCP 也可以是 UDP 任何后面的列都是前面服务的别名 在这个文件中也
+存在着别名 它们出现在端口号后面 在上述例子中 sink 和 null 都是 discard
+服务的别名

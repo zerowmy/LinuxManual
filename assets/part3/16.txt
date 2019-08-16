@@ -1,0 +1,56 @@
+﻿3.3.7 /etc/xinetd.conf
+redhat 7.1 及以后版本计和以往的版本有一个明显的区别 就是用 xinetd.conf
+代替原来的 inetd.conf 并且直接使用了 firewall 服务 xinetd(eXtended
+InterNET services daemon)对 inetd 功能进行了扩展 xinetd 的默认配置文件
+是/etc/xinetd.conf 它看起来尽管和老版本的/etc/inetd.conf 完全不同 其实
+只是以一个脚本的形式将 inetd 中每一行指定的服务扩展为一个/etc/xinetd.d/
+下的配置文件 其格式为
+service service-name
+{
+disabled = yes/no; //是否禁用
+socket_type = xxx; //TCP/IP socket type,such as stream,dgram,raw,....
+protocol = xxx; //服务使用的协议
+server = xxx; //服务 daemon 的完整路径
+server_args = xxx; //服务的参数
+port = xxx; //指定服务的端口号
+wait = xxx; //是否阻塞服务 即单线程或多线程
+user = xxx; //服务进程的 uid
+group = xxx; //gid
+REUSE = xxx; //可重用标志
+......
+}
+示例
+1 配置 ftp 服务
+在/etc/xinetd.d 目录下 编辑 wu-ftpd
+# default: on
+# description: The wu-ftpd FTP server serves FTP connections. It uses
+\
+# normal, unencrypted usernames and passwords for authentication.
+service ftp
+{
+disable = no
+socket_type = stream
+wait = no
+user = root
+server = /usr/sbin/in.ftpd
+server_args = -l -a
+log_on_success += DURATION
+nice = 10
+}
+2 配置 telnet 服务
+在/etc/xinetd.d 目录下 编辑 telnet
+# default: on
+# description: The telnet server serves telnet sessions; it uses \
+# unencrypted username/password pairs for authentication.
+service telnet
+{
+disable = no
+flags = REUSE
+socket_type = stream
+wait = no
+user = root
+server = /usr/sbin/in.telnetd
+log_on_failure += USERID
+}
+配置完成后 重新启动服务
+/etc/rc.d/init.d/xinetd restart

@@ -1,0 +1,12 @@
+﻿4.2.2 硬件时钟系统与系统时间的同步
+/sbin/hwclock 用于同步硬件时钟系统的时间与 Linux操作系统时间
+查看当前硬件时钟系统时间的命令为
+/sbin/hwclock --show
+将硬件时钟系统时间同步到 Linux操作系统时间的命令为
+/sbin/hwclock --hctosys
+将 Linux操作系统时间同步到硬件时钟系统时间的命令为
+/sbin/hwclock --systohc
+如果观察系统启动/关闭时执行的初始化脚本”/etc/rc.d/rc.sysinit” 我们不难发
+现 系统启动过程中 自动调用 /sbin/hwclock --hctosys 将硬件时钟系统
+时间同步到操作系统时间 而在系统关闭过程中 自动调用 /sbin/hwclock
+--systohc 将操作系统时间同步到硬件时钟系统时间

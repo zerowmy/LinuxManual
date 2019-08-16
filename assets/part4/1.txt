@@ -1,0 +1,9 @@
+﻿4.1.1 RPM安装操作
+命令
+rpm -i 需要安装的包文件名
+举例如下
+rpm -i example.rpm 安装 example.rpm包
+rpm -iv example.rpm 安装 example.rpm包 并在安装过程中显示正在
+安装的文件信息
+rpm -ivh example.rpm  安装 example.rpm包 并在安装过程中显示正在
+安装的文件信息及安装进度

@@ -1,0 +1,76 @@
+# [馬哥Linux]視頻學習筆記6——Linux命令詳解[tmp]
+
+
+#### Tables Of Contents
+1. [Linux命令分類](#linux命令分類) 
+2. [文件管理](#文件管理) 
+3. [目錄管理](#目錄管理) 
+4. [日期時間](#日期時間) 
+5. [運行程序](#運行程序) 
+6. [設備管理](#設備管理) 
+7. [軟件管理](#軟件管理) 
+8. [進程管理](#進程管理) 
+
+---
+
+
+#### Linux命令分類
+```
+1. 文件管理
+2. 目錄管理
+3. 運行程序
+4. 設備管理
+5. 軟件管理
+6. 進程管理
+```
+
+#### 文件管理
+```
+touch
+stat
+file
+rm
+cp
+mv
+nano
+```
+
+#### 目錄管理
+```
+ls
+cd
+pwd
+mkdir
+rmdir
+tree
+```
+
+#### 日期時間
+```
+date
+clock
+hwclock
+cal
+```
+
+#### 運行程序
+
+ 
+#### 設備管理
+
+ 
+#### 軟件管理
+
+ 
+#### 進程管理
+
+
+
+
+**Note Time**：2015.02.07 20:40 Saturday 上海
+
+---
+
+`Blog Url`:<http://qingtianjiedu.com/blog/magedu_linux_learn_note_6/>
+`Release Time`:2015-02-08
+`BackUpTime`:2015.11.06 15:23

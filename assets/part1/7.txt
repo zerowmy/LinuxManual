@@ -1,0 +1,55 @@
+﻿1.2.6 软件安装命令
+1. tar
+tar 命令用于把多个文件合并于一个档案文件中 并提供分解的合并后的档案
+文件的功能 它独立于压缩工具 因此可以选择在合并前是否压缩 tar 命令
+的基本用法为
+tar [选项] 文件名
+常用的选项包括
+-c 创建一个新的档案文件
+-t 查看档案文件的内容
+-x 分解档案文件的内容
+-f 指定档案文件的名称
+-v 显示过程信息
+-z 采用压缩方式
+举例
+1 tar -czf oracle.tar.gz /u01/app/oracle /etc/oratab /home/oracle
+该命令将/u01/app/oracle 目录下的所有文件 /etc/oratab 文件和
+/home/oracle 目录下的所有文件合并到 oracle.tar 文件中 并采用压缩方式
+2 tar -tzf oracle.tar.gz
+该命令列出归档文件 oracle.tar 中的所有文件列表
+3 tar –xzvf oracle.tar.gz
+该命令将归档文件分解并解压缩到原有文件的路径中
+2. rpm
+rpm命令的功能有很多 在这里我们只介绍如何利用 rpm安装和查询已安
+装的软件
+1 安装
+rpm安装软件包的基本语法如下
+rpm -i rpm包名
+例如
+rpm -i tomcat4.rpm
+该命令将安装 Tomcat 软件并进行相关系统配置
+2 升级
+rpm升级软件包的基本语法如下
+rpm -U rpm包名
+例如
+rpm –U tomcat4.rpm
+该命令将升级 Tomcat 软件并进行相关系统配置
+3 查看已安装的软件
+有的时候 了解系统中都已经安装了哪些软件包以及它们的用途是很有用
+的 R P M的查询参数就可以做到这一点
+要想列出已经安装的全部软件包 可以通过以下命令
+rpm -qa
+可以使用 g r e p 命令指定软件包的名称 或者部分名称 如下所示
+rpm -qa | grep 'tomcat'
+该命令将列出包名中包含 tomcat 的软件包
+此外 要想找出某个特定的文件到底是属于哪个软件包的 可以输入
+rpm -qf filename
+其中 filename 是准备要查找其归属的文件名称
+要想查出某个已经安装的软件包的功能 可以用如下命令
+rpm -qi packagename
+其中 packagename 是要查找其用途的软件包名称
+4 删除已安装的软件
+使用 RPM删除软件包就像安装它们一样简单 大多数情况下 用户只需
+要输入命令
+rpm -e packagename
+其中 ackagename 是要查删除的软件包名称

@@ -1,0 +1,302 @@
+# [馬哥Linux]視頻學習筆記4——操作系統及常用命令
+
+
+#### Tables Of Contents
+1. [複習](#複習) 
+2. [ls命令](#ls命令) 
+3. [pwd命令](#pwd命令) 
+4. [cd命令](#cd命令) 
+5. [type命令](#type命令) 
+6. [printenv 打印系統環境變量](#printenv-打印系統環境變量) 
+7. [hash命令](#hash命令) 
+8. [date命令](#date命令) 
+9. [獲得命令使用幫助](#獲得命令使用幫助) 
+10. [**man命令**](#man命令) 
+11. [whatis命令](#whatis命令) 
+12. [cal命令](#cal命令) 
+
+---
+
+### 複習
+```
+Shell：
+1.GUI: Graphic User Interface
+     Windows
+     Linux：X-Windows X:圖形顯示協議
+         Gnome
+         KDE
+         Xface
+2.CLI：Command Line Interface
+     sh
+     bash
+     csh
+     ksh
+     zsh
+     bash
+     tcsh
+```
+
+IDE:Integrated Development Environment 集成開發環境
+庫文件
+```
+1. Windows
+    .dll：Dynamic Link Library 動態鏈接庫
+2. Linux
+    .so：Shared Object 共享對象
+    (.dso：Dynamic Shared Object 動態共享對象)
+```
+
+操作系統組成結構（由下到上）
+```
+Shell (GUI/CLI)
+Libary: API 庫
+Kernel:內核
+```
+
+Login:
+用戶名：用戶ID (Identity)
+
+>認證機制：Authentication
+授權：Authorization
+審計：Audition (日誌)
+
+prompt，命令提示符：
+命令：
+magic number:魔數 標識二進制程序的執行格式
+[shebang(Hashbang)](https://zh.wikipedia.org/wiki/Shebang)
+```
+Shell腳本頭部，作用：指定魔數
+# !/bin/bash
+```
+
+\# command options… arguments…
+>選項：
+長選項
+短選項
+參數：
+
+---
+
+#### ls命令
+```
+命令：
+list：ls
+列出，列表
+
+ls
+選項：
+    -l：長格式
+        文件類型：
+            -：普通文件 (f)
+            d：目錄文件
+            b：塊設備文件 (block)
+            c：字條設備文件 (character)
+            l：符號鏈接文件 (symbloic link file)
+            p：命令管道文件 (pipe)
+            s：套接字文件 (socket)
+
+        文件權限：9位，每3位一組，每一組：rwx (讀，寫，執行)， r--/rw-/rwx
+        文件硬鏈接的次數
+        文件的屬主(owner)
+        文件的屬組(group)
+        文件大小(size)，單位是字節Byte
+        時間戳(timestamp)：最近一次被修改的時間
+            訪問：access
+            修改：modify，文件內容發生改變
+            改變：change，metadata，元數據
+        文件名
+
+    -h：做單位轉換，單位Mb
+    -a：顯示以.開頭的隱藏文件
+        .  表當點目錄
+        .. 表父級目錄
+    -A：顯示所有文件，但不包括.,..文件
+    -d：顯示目錄自身屬性
+    -i：index node，inode 顯示文件索引節點號
+    -r：逆序顯示文件
+    -R：遞歸(recursive)顯示
+```
+
+>目錄：也是一種文件，路徑映射文件
+路徑：從指定起始點到目的地所經過的位置 (層次化管理文件)
+文件系統：File System 層次化管理文件
+列出指定路徑下的文件
+
+目錄：
+當前目錄 `working directory`, `current directory`
+
+FHS：[Filesystem Hierarchy Standard](https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard) 文件系統目錄標準
+
+**拓展**：[Linux file system hierarchy](http://www.blackmoreops.com/2015/02/14/linux-file-system-hierarchy/ 'Linux file system hierarchy')
+
+#### pwd命令
+```
+命令：
+pwd：Printing Working Directory
+# pwd
+打印當前目錄地址
+```
+
+
+#### cd命令
+```
+命令：
+cd：change directory
+# cd 目標目錄
+
+    cd：不加參數 回到用戶主目錄/家目錄home directory ~
+    cd ~USERNNAME：root用戶進入指定用戶的home directory
+    cd -：在當前目錄和前一次所在的目錄之間來回切換
+```
+
+
+#### type命令
+```
+Linux命令類型：
+    內置命令(shell內置)，內部，內建
+    外部命令：在文件系統的某個路徑下有一個與命令名稱相對應的可執行文件
+
+type：顯示指定屬於那種類型
+# type 命令名
+
+eg:
+查看echo是內部命令還是外部命令
+[root@localhost doc]# type echo
+echo is a shell builtin
+```
+
+#### printenv 打印系統環境變量
+```
+環境變量：命名的內存空間
+    變量賦值
+    PATH：使用冒號分隔的路徑
+# printenv
+```
+
+#### hash命令
+```
+hash：顯示、添加、刪除hash表
+# hash
+```
+
+#### date命令
+```
+date：時間管理（系統時間）
+Linux：
+    rtc：Real-Time Clock 實時時間
+    ntp：Network Time Protocol 網絡時間協議
+
+    硬件時鐘 clock,hwclock
+    系統時鐘 date
+
+hwclock
+    -w: 將系統時鐘寫入硬件時鐘
+    -s: 將硬件時鐘寫入系統時鐘
+```
+
+#### 獲得命令使用幫助
+```
+1. 內部命令：
+    help COMMAND
+
+2. 外部命令：
+    COMMAND --help
+
+3. 命令手冊：manual
+    man COMMAND
+
+4. 在線手冊：info
+    info COMMAND
+
+5. 文檔： /usr/share/doc/
+
+6. Google
+```
+
+#### man命令
+```
+man分章節(8節)：
+    1.用戶命令(/bin,/usr/bin,/usr/local/bin)
+    2.系統調用
+    3.庫用戶
+    4.特殊文件（設備文件）
+    5.文件格式(COMMAND配置文件的語法)
+    6.遊戲
+    7.雜項（Miscellaneous）
+    8.管理命令（/sbin,/usr/sbin,/usr/local/sbin）
+
+<> 必須給出的內容
+[] 可選內容
+... 可以出現多次
+| 多選一
+{} 分組
+
+MAN：
+    NAME：命令名稱及功能簡要說明
+    SYNOPSIS：用法說明，包括可用的選項
+    DESCRIPTION：命令功能的詳盡說明，可能包括每一個選項的意義
+    OPTIONS：說明每一個選項的意義
+    FILES：此命令相關的配置文件
+    BUGS：
+    EXAMPLES：使用示例
+    SEE ALSO：另外參照
+
+翻頁：
+    向後翻一屏： SPACE
+    向前翻一屏： b
+    向後翻一行： ENTER
+    向前翻一行： k
+
+查找：
+    /KEYWORD： 向後搜索
+        n： 下一個
+        N： 前一個
+    ？KEYWORD： 向前搜索
+        n： 下一個
+        N： 前一個
+
+退出：
+    q
+
+
+eg：
+[root@localhost ~]# man 5 passwd
+```
+
+#### whatis命令
+```
+查看命令出現在什麼章節
+命令
+# whatis COMMAND
+
+eg:
+[root@localhost ~]# whatis read
+read (n)             - Read from a channel
+read (1)             - bash built-in commands, see bash(1)
+read (1p)            - read a line from standard input
+read (2)             - read from a file descriptor
+read (3p)            - read from a file
+[root@localhost ~]# whatis ls
+ls (1)               - list directory contents
+ls (1p)              - list directory contents
+[root@localhost ~]# whatis mount
+mount (2)            - mount file system
+mount (8)            - mount a filesystem
+```
+
+#### cal命令
+```
+cal：calendar
+命令
+# cal
+```
+**註**：時間戳 [timestamp](https://en.wikipedia.org/wiki/Timestamp)
+
+
+**Note Time**：2015.02.06 22:20 Friday 上海
+
+---
+
+`Blog Url`:<http://qingtianjiedu.com/blog/magedu_linux_learn_note_4/>
+`Release Time`:2015-02-06
+`BackUpTime`:2015.11.06 14:57

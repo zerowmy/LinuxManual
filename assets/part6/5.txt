@@ -1,0 +1,90 @@
+# [馬哥Linux]視頻學習筆記5——Linux根文件系統詳解
+
+
+#### Tables Of Contents
+1. [**文件系統**](#文件系統) 
+2. [Linux命令規則](#linux命令規則) 
+3. [Linux命令分類](#linux命令分類) 
+
+
+>file命令及其用法
+Windows：PE
+Linux： ELF
+
+
+#### 文件系統
+```
+rootfs：根文件系統
+FHS：Filesystem Hierarchy Standard--Linux
+
+/boot：系統啓動相關的文件，如內核、initrd、以及grub(bootloader)
+/dev：設備文件
+    設備文件：
+        塊設備：隨機訪問，數據塊(磁盤、硬盤）
+        字符設備：線性訪問，按字符爲單位
+        設備號：主設備號(major)和次設備號(minor)
+/etc：配置文件
+/home：用戶的家目錄，每一個用戶的家目錄通常默認爲/home/USERNAME
+/root：管理員的家目錄
+/lib：庫文件
+    /lib/modules：內核模塊文件
+    靜態庫,        .a
+    動態庫， .dll, .so(shared object)
+/media：掛載點目錄
+/mnt：掛載點目錄，額外的臨時文件系統
+/opt：可選目錄，第三方程序的安裝目錄
+
+（以下2個目錄，系統調優用到）
+/proc：僞文件系統，內核映射文件
+/sys：僞文件系統，跟硬件設備相關的屬性映射文件
+
+/tmp：臨時文件
+/var：可變化的文件
+
+（以下2個目錄，用於放程序）
+/bin：binary 可執行文件，用戶命令
+/sbin：管理命令
+
+/usr：universal shared read-only 全局共享只讀文件
+    /usr/bin
+    /usr/sbin
+    /usr/lib  庫文件存放路徑
+
+/usr/local： 第三方軟體安裝路徑
+    /usr/local/bin
+    /usr/local/sbin
+    /usr/local/lib
+```
+
+
+#### Linux命令規則
+```
+1. 長度不能超過255個字符；
+2. 不能使用 '/' 當文件名，是做路徑分割符或根目錄
+3. 嚴格區分大小寫
+
+絕對路徑：由根目錄開始
+相對路徑：由當前目錄開始
+```
+
+#### Linux命令分類
+```
+1. 文件管理
+2. 目錄管理
+3. 運行程序
+4. 設備管理
+5. 軟件管理
+6. 進程管理
+```
+
+**拓展**：[Linux file system hierarchy](http://www.blackmoreops.com/2015/02/14/linux-file-system-hierarchy/)
+
+
+
+**Note Time**：2015-02-07 09:40 Saturday 上海
+
+---
+
+`Blog Url`:<http://qingtianjiedu.com/blog/magedu_linux_learn_note_5/>
+`Release Time`:2015-02-08
+`BackUpTime`:2015.11.06 15:17

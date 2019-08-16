@@ -1,0 +1,33 @@
+﻿3.1.1 ifconfig
+ifconfig 的语法为
+ifconfig [-a] [-V] [-s] <interface> [[<AF>] <address>]
+[[-]broadcast [<address>]]
+[netmask <address>]
+[up|down]
+其中 interface 为网卡名 address 为 IP 地址 broadcast 表示设置广播
+地址 其后的 address 为广播地址的 IP netmask 表示设置子网掩码
+其后的 address 为子网掩码的 IP up down 设置当前网卡的状态 up
+表示启用当前网卡 down 表示关闭当前网卡
+Ifconfig 的常用参数说明如下
+-a 查看所有网卡状态
+-V 查看 ifconfig 命令的版本信息
+-s 查看统计信息
+示例
+1 将第一块网卡的 IP 地址设置为 192.168.0.1
+ifconfig eth0 192.168.0.1 格式 ifconfig 网络设备名 IP 地址
+2 暂时关闭或启用网卡
+关闭第一块网卡 ifconfig eth0 down
+启用第一块网卡 ifconfig eth0 up 
+3 将第一块网卡的子网掩码设置为 255.255.255.0
+ifconfig eth0 netmask 255.255.255.0 格式 ifconfig 网络设备名 netmask
+子网掩码
+我们也可以同时设置 IP 地址和子网掩码
+ifconfig eth0 192.168.0.1 netmask 255.255.255.0
+4 查看第一块网卡的状态
+ifconfig eth0
+如果要查看所有的网卡状态 则直接使用不带参数的 ifconfig 命令即可
+ifconfig 输出的状态信息是十分有用的 下面 我们就简单说明一下
+有几个状态比较重要
+UP/DOWN 网卡是否启动了 如果是 DOWN的话 那肯定无法用的
+RX packets 中的 errors 包的数量如果过大说明网卡在接收时有问题
+TX packets 中的 errors 包的数量如果过大说明网卡在发送时有问题

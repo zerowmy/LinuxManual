@@ -1,0 +1,16 @@
+﻿3.3 常用网络配置文件介绍
+在 Linux 系统中 TCP/IP 网络是通过若干个文本文件进行配置的 需要编辑
+这些文件来完成联网工作 系统中重要的有关网络配置文件为
+/etc/sysconfig/network
+/etc/hosts
+/etc/services
+/etc/host.conf
+/etc/nsswitch.conf
+/etc/resolv.conf
+/etc/xinetd.conf
+/etc/modules.conf
+/etc/sysconfig/network-scripts/ifcfg-ethN
+接下来我们将对这些文件逐一讲述 这些文件都可以在系统运行时进行修改
+不 用 启 动 或 者 停 止 任 何 守 护 程 序 更 改 会 立 刻 生 效 ( 除 了
+/etc/sysconfig/network) 另外 这些文件都支持由"#"开头的注释 每一个文
+件都有在 UNIX手册页中的第 5 部分中有一项 可以用 man 命令来获取它们

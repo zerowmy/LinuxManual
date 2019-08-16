@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#9DDC38"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tv_text"
+        android:layout_width="300sp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:text="@string/readset_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#D73025" />
+
+    <ProgressBar
+        android:id="@+id/proGressBar1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ProgressBar
+        android:id="@+id/proGressBar2"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btnbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/readset_barset" />
+
+    <TextView
+        android:id="@+id/tvbar"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="@string/readset_fontsize"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#003BFE" />
+
+    <TextView
+        android:id="@+id/testtv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/readset_testfont"
+        android:textColor="#FF0000" />
+
+    <SeekBar
+        android:id="@+id/seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RadioGroup
+        android:id="@+id/menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checkedButton="@+id/setSize"
+        android:orientation="vertical" >
+
+        <RadioButton
+            android:id="@+id/one"
+            android:text="@string/readset_firstfont" />
+
+        <RadioButton
+            android:id="@+id/two"
+            android:text="@string/readset_secondfont" />
+
+        <RadioButton
+            android:id="@+id/three"
+            android:text="@string/readset_thirdfont" />
+
+        <RadioButton
+            android:id="@+id/four"
+            android:text="@string/readset_forthfont" />
+
+        <RadioButton
+            android:id="@+id/five"
+            android:text="@string/readset_fivedfont" />
+    </RadioGroup>
+
+</LinearLayout>

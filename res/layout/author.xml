@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:background="#96E979">
+
+	<ImageView
+		android:layout_height="170dp"
+		android:layout_width="186dp"
+		android:contentDescription="@string/desc_author"
+		android:background="@drawable/author_bg"
+		android:layout_gravity="center"
+		android:layout_marginTop="10dp"/>
+
+	<RelativeLayout
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:layout_margin="30dp">
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:text="@string/lab_net_name"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_width="match_parent"
+			android:id="@+id/aboutTextView1"
+			android:layout_marginTop="10dp"/>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:textColor="#0012FF"
+			android:textStyle="italic|normal"
+			android:layout_below="@id/aboutTextView1"
+			android:id="@+id/aboutTextView2"
+			android:layout_marginTop="10dp"
+			android:paddingLeft="60dp"
+			android:text="@string/net_name"/>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_width="match_parent"
+			android:text="@string/lab_hobby"
+			android:layout_below="@id/aboutTextView2"
+			android:id="@+id/aboutTextView3"
+			android:layout_marginTop="8dp"/>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:textColor="#FF9300"
+			android:textStyle="bold|italic"
+			android:layout_below="@id/aboutTextView3"
+			android:id="@+id/aboutTextView4"
+			android:paddingLeft="60dp"
+			android:text="@string/hobby"/>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_width="match_parent"
+			android:text="@string/lab_xingge"
+			android:layout_below="@id/aboutTextView4"
+			android:id="@+id/aboutTextView5"
+			android:layout_marginTop="12dp"/>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="match_parent"
+			android:textStyle="bold|italic|normal"
+			android:textColor="#E11852"
+			android:layout_below="@id/aboutTextView5"
+			android:paddingLeft="60dp"
+			android:text="@string/xingge"/>
+
+	</RelativeLayout>
+
+	<!--<TextView
+		android:layout_width="100px"
+		android:layout_height="wrap_content"
+		android:textColor="@android:color/white"
+		android:ellipsize="marquee"
+		android:focusable="true"
+		android:marqueeRepeatLimit="marquee_forever"
+		android:focusableInTouchMode="true"
+		android:scrollHorizontally="true"
+		android:text="文字跑马灯效果">
+	</TextView>-->
+
+</LinearLayout>
+

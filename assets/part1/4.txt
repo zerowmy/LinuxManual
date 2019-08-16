@@ -1,0 +1,83 @@
+﻿1.2.3 用户及用户组管理命令
+1. useradd
+useradd 命令可以创建一个新的用户帐号 其最基本用法为
+useradd 用户名
+如输入以下命令
+useradd newuser
+系统将创建一个新用户 newuser 该用户的 Home 目录为/home/newuser
+useradd 命令的参数较多 常用的组合为
+useradd 用户名 -g 组名 –G 组名 -d Home 目录名 -p 密码
+其中 -g 指定该用户的首要组
+-G 指定该用户的次要组
+-d 指定该用户的 Home 目录
+-p 指定该用户的密码
+如输入以下命令
+useradd oracle –g oinstall –G dba –d /home/oracle –p ora123
+系统将创建一个用户 oracle oracle 用户的首要组为 oinstall 次要组为 dba
+Home 目录为/home/oracle 密码为 ora123
+2. userdel
+userdel 命令用于删除一个已存在的帐号 其用法为
+userdel 用户名
+3. groupadd
+groupadd 命令可以创建一个新的用户组 其最基本用法为
+groupadd 组名
+如输入以下命令
+groupadd newgroup
+系统将创建一个新的用户组 newgroup
+4. groupdel
+groupdel 命令用于删除一个已存在的用户组 其用法为
+groupdel 组名
+5. passwd
+出于系统安全考虑 Linux系统中的每一个用户除了有其用户名外还有其对应
+的用户口令 用户可以随时用 passwd 命令改变自己的口令 该命令的一般格
+式为
+passwd
+输入该命令后 按系统提示依次输入密码和密码确认后 即可完成用户密码
+的修改
+此外 超级用户还可以修改其他用户的口令 命令如下
+passwd 用户名
+6. su
+su 命令这个命令非常重要 它可以让一个普通用户拥有超级用户或其他用户
+的权限 也可以让超级用户以普通用户的身份做一些事情 普通用户使用这
+个命令时必须有超级用户或其他用户的口令 如要离开当前用户的身份 可
+以键入 exit 命令 su 命令的一般形式为
+su - 用户名
+7. chmod
+chmod 命令是非常重要的 用于改变文件或目录的访问权限 该命令有两种
+用法 一种是包含字母和操作符表达式的文字设定法 另一种是包含数字的
+数字设定法
+由于数字设定法不太直观 本文不做介绍 文字设定法的用法如下
+chmod [who] [+ | - | =] [mode] 文件名
+命令中各选项的含义为
+1 操作对象 who可以是下述字母中的任一个或者它们的组合
+u 表示用户(user) 即文件或目录的所有者
+g 表示同组(group)用户 即与文件属主有相同组 ID 的所有用户
+o 表示其他(others)用户
+a 表示所有(all)用户 它是系统默认值
+2 操作符号可以是
++ 添加某个权限
+- 取消某个权限
+= 赋予给定权限,并取消其他所有权限
+3 mode 表示权限 常用的参数有
+r 可读
+w 可写
+x 可执行
+举例
+1 将文件 script 的权限设为可执行 命令如下
+chmod =rx text
+执行成功后 用 ls -l script 命令查看文件属性的结果如下
+-r-xr-xr-x 1 user group 0 Feb 10 09:42 script
+2 将文件 text 的权限设为 文件属主可读 可写 可执行 与文件属主同组
+的用户可读 其他用户不可读 命令如下
+chmod u=rwx,g=r,o= text  注意,后无空格 o=后有空格
+执行成功后 用 ls –l text 命令查看文件属性的结果如下
+-rwxr----- 1 user group 0 Feb 10 09:42 text
+8. chown
+chown 用于更改某个文件或目录的属主和属组 这个命令也很常用 例如
+root 用户把自己的一个文件拷贝给用户 oracle 为了让用户 oracle 能够存
+取这个文件 root 用户应该把这个文件的属主设为oracle 否则用户oracle
+无法存取这个文件 chown 的基本用法为
+chown [用户:组] 文件
+举例
+chown oracle:dba text
+该命令将 text 文件的属主和属组分别改为 oracle 和 dba

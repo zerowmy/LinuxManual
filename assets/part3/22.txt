@@ -1,0 +1,23 @@
+﻿3.4.3 r-系列命令
+除 ftp 和 telnet 以外 还可以使用 r-系列命令访问远程计算机和在网络上交换
+文件 使用 r-系列命令需要特别注意 因为如果用户不小心 就会造成严重的
+安全漏洞 用户发出一个 r-系列命令后 远程系统检查名为/etc/hosts.equiv
+的文件 以查看用户的主机是否列在这个文件中 如果它没有找到用户的主
+机 就检查远程机上同名用户的主目录中名为 rhosts 的文件 看是否包括该
+用户的主机 如果该用户的主机包括在这两个文件中的任何一个之中 该用
+户执行 r-系列命令就不用提供口令
+rlogin 命令
+rlogin 是 remote login 远程登录 的缩写 该命令与 telnet 命令很相似
+允许用户启动远程系统上的交互命令会话 rlogin 的一般格式是
+rlogin [ -8EKLdx ] [ -e char ] [-k realm ] [ - l username ] host
+一般最常用的格式是
+rlogin host
+rsh 命令
+rsh 是 remote shell 远程 shell 的缩写 该命令在指定的远程主机上启
+动一个 shell 并执行用户在 rsh 命令行中指定的命令 如果用户没有给出要执
+行的命令 rsh 就用 rlogin 命令使用户登录到远程机上 rsh 命令的一般格式
+是
+rsh [-Kdnx] [-k realm] [-l username] host [command]
+一般常用的格式是
+rsh host [command ]
+command 可以是从 shell 提示符下键人的任何 Linux命令

@@ -1,0 +1,24 @@
+﻿3.3.4 /etc/host.conf 配置名字解析器
+有两个文件声明系统到哪里寻找名字信息来配置 UNIX名字解析器的库 文件
+/etc/host.conf 由版本 5 的 libc 库所使用 而/etc/nsswitch.conf 由版本 6 使用
+(glibc ) 问题在于一些程序使用其中一个 而一些使用另一个 所以将两个
+文件都配置正确是必要的
+/etc/host.conf 文件指定如何解析主机名 Linux通过解析器库来获得主机名对
+应的 IP 地址 下面是 RedHat 安装后缺省的"/etc/host.conf"内容
+order hosts bind
+multi on
+"order " 指定主机名查询顺序 其参数为用逗号隔开的查找方法 支持的查找
+方法为 bind hosts 和 nis 分别代表 DNS /etc/hosts 和 NIS 这里规定先
+查询"/etc/hosts"文件然后再使用 DNS 来解析域名
+"trim" 表明当通过 DNS 进行地址到主机名的转换时 域名将从主机名中被裁
+剪掉 trim可以被多个域包含多次 对/etc/hosts 和 NIS查询方法不起作用
+注意在/etc/hosts 和 NIS 表中主机名是被适当地(有或没有全域名)列出的
+"multi" 指定是否"/etc/hosts"文件中指定的主机可以有多个地址 值为 on 表示
+允许 拥有多个 IP 地址的主机一般称为具有多个网络界面
+"nospoof " 指是否允许对该服务器进行 IP 地址欺骗 值为 on 表示不允许 IP
+欺骗是一种攻击系统安全的手段 通过把 IP 地址伪装成别的计算机 来取得
+其它计算机的信任
+"alert" 当 nospoof 指令为 on 时 alert 控制欺骗的企图是否用 syslog 工具进
+行记录 值为 on 表示使用 缺省值为 off
+rccorder" 如果被设置为 on 所有的查询将被重新排序 所以在同一子网中的
+主机将首选被返回 缺省值为 off

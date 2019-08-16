@@ -1,0 +1,44 @@
+# [馬哥Linux]視頻學習筆記12——Linux用戶管理命令詳解
+
+
+#### 權限管理
+```
+chown
+chgrp
+chmod
+umask
+```
+
+
+>`/etc/passwd`:
+用戶名：密碼：UID：GID：註釋：家目錄：默認SHELL
+>
+`/etc/group`：
+組名：密碼：GID：以此組爲其附加組的用戶列表
+>
+`/etc/shadow`：
+用戶名：密碼：最近一次修改密碼的時間：最短使用期限：最長使用期限：警告時間：非活動時間：過期時間
+
+
+#### 用戶管理
+```
+useradd
+userdel
+usermod
+passwd
+chsh
+chfn
+finger
+id
+chage
+```
+
+---
+
+**Note Time**：2015.02.15 13:55 Sunday 上海
+
+---
+
+`Blog Url`:<http://qingtianjiedu.com/blog/magedu_linux_learn_note_12/>
+`Release Time`:2015-02-15
+`BackUpTime`:2015.11.07 08:54

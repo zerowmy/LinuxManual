@@ -1,0 +1,33 @@
+﻿第 1 章 命令行操作及常用命令使用
+----1.1 命令行操作
+--------1.1.1 Shell 简介
+
+shell 是用户和 Linux 操作系统之间的接口 Linux 中有多种 shell 其中缺省
+使用的是 bash
+Linux 系统的 shell 作为操作系统的外壳为用户提供使用操作系统的接口 它是一个命令语言解释器 拥有自己内建的 shell 命令集 
+shell 也能被系统中其他应用程序所调用 
+用户在提示符下输入的命令都由 shell 先解释然后传给Linux核心
+Linux中的 shell 有多种类型 其中最常用的几种是 Bourne shell sh C shell csh 和 Korn shell ksh 三种 shell 各有优缺
+Bourne shell 是 UNIX 最初使用的 shell 并且在每种 UNIX 上都可以使用
+Bourne shell 在 shell 编程方面相当优秀 但在处理与用户的交互方面做得不
+如其他几种 shell Linux操作系统缺省的 shell 是 Bourne Again shell 它是
+Bourne shell 的扩展 简称 bash 与 Bourne shell 完全向后兼容 并且在
+Bourne shell 的基础上增加增强了很多特性 它还包含了很多 C shell 和 Korn
+shell 中的优点 有灵活和强大的编程接口同时又有很友好的用户界面
+C shell 是一种比 Bourne shell 更适于编程的 shell 它的语法与 C 语言很相似
+Linux为喜欢使用 C shell 的人提供了 Tcsh Tcsh 是 C shell 的一个扩展版本
+Tcsh 包括命令行编辑可编程单词补全 拼写校正 历史命令替换 作业控制
+和类似 C语言的语法 它不仅和 Bash shell是提示符兼容 而且还提供比 Bash
+shell 更多的提示符参数
+Korn shell 集合了 C shell 和 Bourne shell 的优点并且和 Bourne shell 完全兼
+容 Linux系统提供了 pdksh ksh 的扩展 它支持任务控制 可以在命令行
+上挂起 后台执行 唤醒或终止程序
+Redhat Linux系统默认的 shell 是 bash 对普通用户用$作提示符 对超级用户 root 用#作提示符 一旦出现了 shell 提示符就可以键入命令名称及命令所需要的参数,我们来实习一下 shell 是如何工作的 在 shell 提示符下输入以下命令
+
+$ ls –al
+该命令可以列出当前目录下的所有文件和子目录
+用户在登录到 Linux时 由/etc/passwd 文件来决定要使用哪个 shell 例如
+该文件中含有类似如下一行
+myself:x:500:500:Linux User:/home/myself:/bin/bash
+用户使用的 shell 被列每行的末尾 /bin/bash
+由于 bash是 Redhat Linux上缺省的 shell 本文将主要介绍 bash 及其相关知识

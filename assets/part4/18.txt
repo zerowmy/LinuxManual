@@ -1,0 +1,9 @@
+﻿4.5.2 文件内容查找命令 grep
+grep 命令用于查找指定的模式匹配 格式为
+grep [命令选项] 要查找的匹配模式 [要查找的文件]
+例如
+grep cams test.txt  在 test.txt 文件中查找 cams 字符串
+grep -r cams /root/cams 在 /root/cams 目录及其子目录下的所有文件中
+查找 cams 字符串
+grep命令除了能够查找文件外 还能够将任意输出流重定向到grep进行查找
+ps -ef | grep ora 查找进程名中包含 ora 的所有进程信息

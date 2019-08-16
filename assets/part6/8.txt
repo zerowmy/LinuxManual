@@ -1,0 +1,299 @@
+# [馬哥Linux]視頻學習筆記8——Linux目錄管理命令詳解
+
+@(標籤)[mkdir|rmdir|touch|nano|rm|rp|mv|install]
+
+#### Tables Of Contents
+1. [目錄創建和刪除](#目錄創建和刪除) 
+1.1 [mkdir命令](#mkdir命令) 
+1.2 [rmdir命令](#rmdir命令) 
+2. [文件創建和刪除](#文件創建和刪除) 
+2.1 [touch命令](#touch命令) 
+2.2 [nano命令](#nano命令) 
+2.3 [rm命令](#rm命令) 
+3. [複製和移動文件](#複製和移動文件) 
+3.1 [cp命令](#cp命令) 
+3.2 [mv命令](#mv命令) 
+3.3 [install命令](#install命令) 
+
+---
+
+#### 目錄創建和刪除
+##### mkdir命令
+>mkdir：創建空目錄
+-p: 遞歸創建目錄
+-v: 顯示目錄/文件創建過程
+
+～USERNAME
+eg：
+`mkdir -pv /mnt/test/x/m /mnt/test/y` == `mkdir -pv /mnt/test/{x/m,y}`
+
+```
+[root@localhost ~]# cd /mnt;ls
+usb
+[root@localhost mnt]# mkdir -pv /mnt/test/{x/m,y}
+mkdir: created directory ‘/mnt/test’
+mkdir: created directory ‘/mnt/test/x’
+mkdir: created directory ‘/mnt/test/x/m’
+mkdir: created directory ‘/mnt/test/y’
+[root@localhost mnt]# tree /mnt/test
+/mnt/test
+├── x
+│   └── m
+└── y
+
+3 directories, 0 files
+[root@localhost mnt]#
+```
+
+>命令行展開
+/mnt/test2
+a_b,a_c,d_b,d_c
+(a+d)(b+c)=ab+ac+db+dc
+{a,d}_{b,c}
+>
+`mkdir -pv /mnt/test2/{a,d}_{b,c}`
+
+```
+[root@localhost mnt]# cd /mnt;ls
+test  usb
+[root@localhost mnt]# mkdir -pv /mnt/test2/{a,d}_{b,c}
+mkdir: created directory ‘/mnt/test2’
+mkdir: created directory ‘/mnt/test2/a_b’
+mkdir: created directory ‘/mnt/test2/a_c’
+mkdir: created directory ‘/mnt/test2/d_b’
+mkdir: created directory ‘/mnt/test2/d_c’
+[root@localhost mnt]# tree /mnt/test2
+/mnt/test2
+├── a_b
+├── a_c
+├── d_b
+└── d_c
+
+4 directories, 0 files
+[root@localhost mnt]#
+```
+
+##### rmdir命令
+```
+刪除目錄：rmdir (remove directory)
+    刪除空目錄
+    -p
+[root@localhost ~]# mkdir -pv /mnt/test/{a,d}_{b,c}
+mkdir: created directory ‘/mnt/test’
+mkdir: created directory ‘/mnt/test/a_b’
+mkdir: created directory ‘/mnt/test/a_c’
+mkdir: created directory ‘/mnt/test/d_b’
+mkdir: created directory ‘/mnt/test/d_c’
+[root@localhost ~]# tree /mnt/test
+/mnt/test
+├── a_b
+├── a_c
+├── d_b
+└── d_c
+
+4 directories, 0 files
+[root@localhost ~]# rmdir -p /mnt/test/a
+rmdir: failed to remove ‘/mnt/test/a’: No such file or directory
+[root@localhost ~]# rmdir -p /mnt/test/a_b;tree /mnt/test
+rmdir: failed to remove directory ‘/mnt/test’: Directory not empty
+/mnt/test
+├── a_c
+├── d_b
+└── d_c
+
+3 directories, 0 files
+[root@localhost ~]#
+```
+---
+
+#### 文件創建和刪除
+
+##### touch命令
+*touch 更改文件時間戳，當文件名不存在時爲創建新文件*
+
+```
+# touch
+   -a    change only the access time
+    -m    change only the modification time
+    -t    use [[CC]YY]MMDDhhmm[.ss] instead of current time
+    -c    do not create any files
+
+# stat
+
+[root@localhost mnt]# touch -c linux;ls
+file  usb
+[root@localhost mnt]# touch linux;ls
+file  linux  usb
+[root@localhost mnt]# stat linux
+ File: ‘linux’
+  Size: 0           Blocks: 0          IO Block: 4096   regular empty file
+Device: fd01h/64769d    Inode: 1611348033  Links: 1
+Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2015-02-07 21:51:03.083500225 +0800
+Modify: 2015-02-07 21:51:03.083500225 +0800
+Change: 2015-02-07 21:51:03.083500225 +0800
+ Birth: -
+[root@localhost mnt]# touch -a linux;stat linux
+ File: ‘linux’
+  Size: 0           Blocks: 0          IO Block: 4096   regular empty file
+Device: fd01h/64769d    Inode: 1611348033  Links: 1
+Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2015-02-07 21:51:28.443690537 +0800
+Modify: 2015-02-07 21:51:03.083500225 +0800
+Change: 2015-02-07 21:51:28.443690537 +0800
+ Birth: -
+[root@localhost mnt]# touch -m linux;stat linux
+ File: ‘linux’
+  Size: 0           Blocks: 0          IO Block: 4096   regular empty file
+Device: fd01h/64769d    Inode: 1611348033  Links: 1
+Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2015-02-07 21:51:28.443690537 +0800
+Modify: 2015-02-07 21:52:02.525946216 +0800
+Change: 2015-02-07 21:52:02.525946216 +0800
+ Birth: -
+[root@localhost mnt]# touch -t 200808082008.08 linux;stat linux
+ File: ‘linux’
+  Size: 0           Blocks: 0          IO Block: 4096   regular empty file
+Device: fd01h/64769d    Inode: 1611348033  Links: 1
+Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2008-08-08 20:08:08.000000000 +0800
+Modify: 2008-08-08 20:08:08.000000000 +0800
+Change: 2015-02-07 21:57:43.369494805 +0800
+ Birth: -
+[root@localhost mnt]# touch -a -t 198808082008.08 linux;stat linux
+ File: ‘linux’
+  Size: 0           Blocks: 0          IO Block: 4096   regular empty file
+Device: fd01h/64769d    Inode: 1611348033  Links: 1
+Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 1988-08-08 20:08:08.000000000 +0900
+Modify: 2008-08-08 20:08:08.000000000 +0800
+Change: 2015-02-07 21:58:49.745989666 +0800
+ Birth: -
+[root@localhost mnt]#
+```
+
+>創建文件，可以使用文件編輯器
+ASCII:
+0000 1001：t
+>
+2^16：65536
+0000 1001 0000 1110
+>
+標準：GB18030,GBK,GB2312,Unicode
+
+##### nano命令
+
+##### rm命令
+```
+刪除文件：rm
+rm：
+    -i  --interactive prompt before every removal 刪除之前提示
+
+    -f  --force ignore nonexistent files and arguments, never prompt
+        強制刪除，忽略不存在的文件，無提示
+
+    -r  --recursive 遞歸刪除
+
+/rm    使用命令原本的功能
+rm -rf 遞歸刪除目錄，沒有提示
+```
+
+---
+
+#### 複製和移動文件
+
+##### cp命令
+```
+cp：copy
+命令
+# cp SRC DEST
+
+    -R, -r, --recursive 遞歸複製目錄及目錄下的子目錄/文件 
+            copy directories recursively
+
+    -i, --interactive   覆蓋文件之前提示
+            prompt before overwrite (overrides a previous -n option)
+
+    -f, --force         強行覆蓋，不提示
+
+    -a, --archive       歸檔複製，常用於備份
+            same as -dR --preserve=all
+
+    保留文件的屬主、時間戳
+    -p     same as --preserve=mode,ownership,timestamps
+    --preserve[=ATTR_LIST]
+           preserve the specified attributes (default: mode,ownership,time‐stamps), if possible additional attributes: context, links, xattr, all
+
+
+cp file1 file2 file3
+一個文件到一個文件
+多個文件到一個目錄
+
+cp別名
+[root@localhost ~]# type cp
+cp is aliased to `cp -i'
+[root@localhost ~]#
+```
+
+```
+//複製多個文件到一個目錄
+[root@localhost ~]# ls /mnt
+file
+[root@localhost ~]# mkdir /mnt/linux;tree /mnt/linux
+/mnt/linux
+
+0 directories, 0 files
+[root@localhost ~]# cp /etc/{passwd,inittab,yum.repos.d/CentOS-Base.repo} /mnt/linux/
+[root@localhost ~]# tree /mnt/linux
+/mnt/linux
+├── CentOS-Base.repo
+├── inittab
+└── passwd
+
+0 directories, 3 files
+[root@localhost ~]#
+```
+
+##### mv命令
+```
+mv：move
+命令
+# mv SRC DEST
+# mv -t DEST SRC
+
+    -f, --force
+        do not prompt before overwriting
+
+    -i, --interactive
+        prompt before overwrite
+
+    -n, --no-clobber
+        do not overwrite an existing file
+
+    -t, --target-directory=DIRECTORY
+        move all SOURCE arguments into DIRECTORY
+```
+
+##### install命令
+```
+install - copy files and set attributes
+
+    -d, --directory    創建目錄
+        SRC DEST
+        treat all arguments as directory names; create all components of the specified directories
+
+    -t, --target-directory=DIRECTORY
+        copy all SOURCE arguments into DIRECTORY
+
+install -t DIRECTORY SRC...  類同 # mv -t DEST SRC
+```
+
+---
+
+**Note Time**：2015.02.08 11:39 Sunday 上海
+
+---
+
+`Blog Url`:<http://qingtianjiedu.com/blog/magedu_linux_learn_note_8/>
+`Release Time`:2015-02-08
+`BackUpTime`:2015.11.06 15:55

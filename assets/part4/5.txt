@@ -1,0 +1,9 @@
+﻿4.1.5 RPM验证操作
+命令
+rpm -V 需要验证的包
+举例如下
+rpm -Vf /etc/tomcat4/tomcat4.conf
+输出信息类似如下
+S.5....T c /etc/tomcat4/tomcat4.conf
+其中 S表示文件大小修改过 T 表示文件日期修改过 限于篇幅 更多的验
+证信息请您参考 rpm帮助文件 man rpm

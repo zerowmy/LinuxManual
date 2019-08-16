@@ -1,0 +1,20 @@
+﻿3.3.6 /etc/resolv.conf 配置 DNS 客户
+文件/etc/resolv.conf 配置 DNS 客户 它包含了主机的域名搜索顺序和 DNS
+服务器的地址 每一行应包含一个关键字和一个或多个的由空格隔开的参数
+下面是一个例子文件
+nameserver 192.168.0.36
+nameserver 192.168.0.37
+search huawei-3com.com
+合法的参数及其意义如下
+nameserver 表明 DNS 服务器的 IP 地址 可以有很多行的 nameserver 每
+一个带一个 I P地址 在查询时就按 nameserver 在本文件中的顺序进行 且
+只有当第一个 nameserver 没有反应时才查询下面的 nameserver.
+domain 声明主机的域名 很多程序用到它 如邮件系统 当为没有域名的主
+机进行 DNS 查询时 也要用到 如果没有域名 主机名将被使用 删除所有
+在第一个点( . )前面的内容
+search 它的多个参数指明域名查询顺序 当要查询没有域名的主机 主机将
+在由 search 声明的域中分别查找 domain 和 search 不能共存 如果同时存
+在 后面出现的将会被使用
+sortlist 允许将得到域名结果进行特定的排序 它的参数为网络/掩码对 允许
+任意的排列顺序 Red Hat 中没有提供缺省的/ e t c / r e s o l v. c o n f 文件
+它的内容是根据在安装时给出的选项动态创建的

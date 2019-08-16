@@ -1,0 +1,77 @@
+# [馬哥Linux]視頻學習筆記1——開場
+
+
+#### Tables Of Contents
+1. [課程內容](#課程內容) 
+2. [Linux常見工作崗位](#linux常見工作崗位) 
+3. [方法論](#方法論) 
+4. [虛擬機的安裝及使用](#虛擬機的安裝及使用) 
+
+---
+
+主講者：**馬永亮**
+
+```
+RHCE+RHCA+Shell編程+MySQL+Web集羣+NoSQL+Hadoop+Hbase+OpenStack
+```
+
+#### 課程內容
+1. RHCE：Red Hat Certified Engineer
+```
+RH033
+RH133
+RH253
+```
+
+2. RHCA：Red Hat Certified Architect 紅帽認證架構師培訓使用的書
+```
+RH401
+RH423(LDAP)
+RH442--系統調優
+RH436
+RHS333
+```
+
+3. MySQL
+
+4. RH436（集羣）
+
+5. Web後端技術
+```
+1. 異步消息隊列
+2. 中間件類的應用程序服務器
+3. 基於軟件實現的七層負載均衡器
+4. NoSQL、MongoDB
+```
+
+6. 如何寫簡歷、投遞簡歷、面試、找工作（上海）
+
+#### Linux常見工作崗位
+```
+1. 運維工程師——負責系統運維
+2. 系統工程師——負責系統架構、上線
+3. 系統架構師——系統架構規劃
+4. DBA
+```
+
+#### 方法論：
+```
+1. 學習新知識的思路：總--分--總
+2. 思維方式
+3. 做人
+```
+#### 虛擬機的安裝及使用
+1. [VMware Workstation](http://www.vmware.com/products/workstation/)
+2. [Oracle VM VirtualBox](https://www.virtualbox.org/)
+
+**註**：擎天節度比較喜歡Oracle VM VirtualBox，開源、體積小
+
+運維部落格推介 :[系統運維](http://www.osyunwei.com/)
+
+**Note Time**：2015.01.26 18:17 上海
+
+---
+
+`Blog Url`:<http://qingtianjiedu.com/blog/magedu_linux_learn_note_1/>
+`Release Time`:2014-11-26
+`BackUpTime`:2015.11.06 14:12

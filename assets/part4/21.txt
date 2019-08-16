@@ -1,0 +1,8 @@
+﻿4.6.2 启动和停止服务
+service 命令用于启动及停止某个服务 例如
+service camsd stop 停止 camsd 服务
+service oracled start 启动 oracled 服务
+service tomcat4 start 启动 tomcat4 服务
+CAMS引入的三个服务间有依赖关系 即 camsd 服务和 tomcat4 服务依赖与
+oracled 服务 在 oracled 服务启动前不能启动 camsd 服务和 tomcat4 服务
+而在 oracled 服务停止前必须先停止 camsd 服务和 tomcat4 服务

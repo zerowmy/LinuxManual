@@ -1,0 +1,92 @@
+﻿3.4.1 ftp 远程文件传输
+ftp 命令是标准的文件传输协议的用户接口 ftp 是在 TCP/IP 网络上的计算机
+之间传输文件的简单有效的方法 它允许用户传输 ASCII文件和二进制文件
+在 ftp 会话过程中 用户可以通过使用 ftp 客户程序连接到另一台计算机上
+从此 用户可以在目录中上下移动 列出目录内容 把文件从远程机拷贝到
+本地机上 把文件从本地机传输到远程系统中 需要注意的是 如果用户没
+有那个文件的存取权限 就不能从远程系统中获得文件或向远程系统传输文
+件 为了使用 ftp 来传输文件 用户必须知道远程计算机上的合法用户名和口
+令 这个用户名/口令的组合用来确认 ftp 会话 并用来确定用户对要传输的文
+件可以进行什么样的访问
+ftp 命令的一般格式如下
+$ ftp 主机名/IP
+如果没有指定主机名 ftp 将给出提示符 等待用户输入命令
+$ ftp
+ftp >
+此时在 ftp>提示符后面输入 open 命令加主机名或 IP 地址 将试图连接指
+定的主机 不管使用哪一种方法 如果连接成功 需要在远程机上登录 用
+户如果在远程机上有帐号 就可以通过 ftp 使用这一帐号并需要提供口令 在
+远程机上的用户帐号的读写权限决定该用户在远程机上能下载什么文件和将
+上载文件放到哪个目录中
+一旦用户使用 ftp 在远程站点上登录成功 将得到 ftp> 提示符 现在
+可以自由使用 ftp 提供的命令 可以用 help 命令取得可供使用的命令清单 也
+可以在 help 命令后面指定具体的命令名称 获得这条命令的说明
+最常用的命令有
+ls 列出远程机的当前目录
+cd 在远程机上改变工作目录
+lcd 在本地机上改变工作目录
+ascii 设置文件传输方式为 ASCII模式  默认情况下 ftp 按 ASCII
+模式传输文件 用户也可以指定其他模式 ascii 和 brinary 命令
+的功能是设置传输的模式 用 ASCII 模式传输文件对纯文本是
+非常好的 但为避免对二进制文件的破坏 用户可以以二进制模
+式传输文件
+binary 设置文件传输方式为二进制模式
+close 终止当前的 ftp 会话
+hash 每次传输完数据缓冲区中的数据后就显示一个#号
+get mget 从远程机传送指定文件到本地机 get 命令的一般格式为
+get 文件名
+mget 命令一次获取多个远程文件 mget 命令的一般格式为
+mget 文件名列表
+使用用空格分隔的或带通配符的文件名列表来指定要获取的文
+件 对其中的每个文件都要求用户确认是否传送
+put mput 从本地机传送指定文件到远程机  put 命令的一般格式为
+put 文件名
+mput 命令一次发送多个本地文件 mput 命令的一般格式为
+mput 文件名列表
+使用用空格分隔的或带通配符的文件名列表来指定要发送的文
+件 对其中的每个文件都要求用户确认是否发送
+open 连接远程 ftp 站点
+quit 断开与远程机的连接并退出 ftp
+? 显示本地帮助信息
+! 转到 Shell 中
+示例
+使用 ftp 传输文件过程如下
+[root@localhost root]# ftp 192.168.1.66
+Connected to 192.168.1.66 (192.168.1.66).
+220 localhost.localdomain FTP server (Version wu-2.6.2-5) ready.
+Name (192.168.1.66:root): test
+331 Password required for test.
+Password:
+230 User oracle logged in. Access restrictions apply.
+Remote system type is UNIX.
+Using binary mode to transfer files.
+ftp> ls
+227 Entering Passive Mode (192.168.1.66,228,168)
+150 Opening ASCII mode data connection for directory listing.
+total 312
+-rw-r--r-- 1 root root 1215 Feb 4 13:49 button1.jpg
+-rw-r--r-- 1 root root 1133 Feb 4 13:49 button2.jpg
+-rw-r--r-- 1 root root 1435 Feb 4 13:46 index.html
+226 Transfer complete.
+ftp> lcd
+Local directory now /root
+ftp> lcd tmp
+Local directory now /root/tmp
+ftp> bin
+200 Type set to I.
+ftp> mget *.jpg
+mget button1.jpg? y
+227 Entering Passive Mode (10,153,89,66,187,198)
+150 Opening BINARY mode data connection for button1.jpg (1215 bytes).
+226 Transfer complete.
+1215 bytes received in 0.0119 secs (1e+02 Kbytes/sec)
+mget button2.jpg? y
+227 Entering Passive Mode (10,153,89,66,243,218)
+150 Opening BINARY mode data connection for button2.jpg (1133 bytes).
+226 Transfer complete.
+1133 bytes received in 0.00223 secs (5e+02 Kbytes/sec)
+ftp> quit
+221-You have transferred 2348 bytes in 2 files.
+221-Total traffic for this session was 3315 bytes in 3 transfers.
+221-Thank you for using the FTP service on localhost.localdomain.
+221 Goodbye.

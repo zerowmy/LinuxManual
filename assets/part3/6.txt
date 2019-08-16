@@ -1,0 +1,8 @@
+﻿3.2.3 host
+host 命令的功能基本与 nslookup 相同 命令的语法为
+host [选项] [IP 地址/域名/主机名]
+host 的常用参数如下
+-a 显示所查域名或 IP 地址 域名或主机名的相关信息
+示例
+[root]# host huawei-3com.com
+huawei-3com.com has address 172.19.1.228

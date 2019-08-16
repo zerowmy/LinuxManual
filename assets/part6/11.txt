@@ -1,0 +1,236 @@
+# [馬哥Linux]視頻學習筆記11——Linux用戶及權限詳解
+
+@(標籤)[/etc/passwd|/etc/shadow|useradd|groupadd]
+
+#### Tables Of Contents
+1. [程序、進程、庫](#program_progress) 
+2. [安全上下文](#安全上下文) 
+3. [/etc/passwd](#etc_passwd) 
+4. [/etc/shadow](#etc_shadow) 
+5. [useradd/groupadd](#useradd_groupadd) 
+6. [加密方法](#加密方法) 
+7. [用戶管理命令](#用戶管理命令) 
+
+
+---
+
+<span id="program_progress"></span>
+#### 程序、進程、庫
+>應用程序本身放在硬盤上叫`程序`，
+啓動之後稱作`進程`(Process)。
+進程：程序的執行過程，處於系統上，能夠獲得CPU時間和內存資源以及其他文件等，並且能否運行起來的處於運行當中的程序。
+>
+如果一個進程在編譯時使用了共享庫，則該進程在啓動之前需將所依賴的庫裝入內存。故內存中啓動有各個(非獨立執行，被程序調用)庫。
+>
+共享庫，被多個進程調用的庫。
+>
+庫與進程是平行的關係，只不過庫被進程依賴。
+
+---
+#### 安全上下文
+計算資源：
+
+權限：資源或服務的訪問能力
+邏輯容器：用戶，容器，關聯權限：用戶組，方便的指派權限；
+
+用戶：標誌符
+用戶組：標誌符
+
+文件：
+
+>安全上下文(secure context):
+進程是用戶發起的進程，是用戶操作計算機的代理。
+進程也有屬主、屬組
+進程在運行時，是以發起發起者的身份運行。
+故進程能訪問哪些文件，取決於進程自身的權限和其訪問的資源/文件的權限。
+而權限的判斷過程由系統資源的安全管理屬性自動完成，(在內核的管理下)。
+
+權限：
+r，w，x
+
+*文件*：
+```
+r：可讀，可以使用類似cat等命令查看文件內容；
+w：可寫，可以編輯或刪除此文件；
+x：可執行，exacutable，可以命令提示符下當作命令提交給內核運行；
+```
+
+*目錄*：
+```
+r：可以對此目錄執行ls以列出內部的所有文件；
+w：可以在此目錄創建文件；
+x：可以使用cd切換進此目錄，也可以使用 ls -l 查看內部文件的詳細信息。
+```
+
+通常目錄有x權限，而文件沒有x權限；
+```
+rwx：
+    r--：只讀
+    r-x：讀和執行
+    ---：無權限
+
+0，000，---：無權限
+1，001，--x：執行
+2，010，-w-：寫
+3，011，-wx：寫和執行
+4，100，r--：只讀
+5，101，r-x：讀和執行
+6，110，rw-：讀寫
+7，111，rwx：讀寫執行
+```
+
+>用戶：UID，/etc/passwd
+組：GID，/etc/group
+
+影子口令：
+用戶：/etc/shadow
+組：/etc/gshadow
+
+解析：名稱解析
+
+*用戶類別*：
+```
+管理員：id號爲0
+普通用戶：id號1-65535（2^16）
+    系統用戶：1-499
+    一般用戶：500-60000
+```
+
+*用户组類別*：
+```
+//1
+管理員組：
+普通組：
+    系統組：
+    一般組：
+
+//2
+私有組：創建用戶時，如果沒有爲其指定所屬的組，系統會自動爲其創建以一個與用戶名同名的組；
+基本組：用戶的默認組；
+附加組：額外組，默認組以外的其它組；
+```
+
+<span id="etc_passwd"></span>
+#### /etc/passwd
+```
+account：用戶名/登錄名
+password：密碼，‘x’代表密碼不爲空，在/etc/shadow中
+UID：用戶ID號
+GID：基本組ID號
+GECOS：用戶的註釋信息 commnet
+directory：Home Dir 家目錄
+shell：用戶默認的shell
+```
+
+<span id="etc_shadow"></span>
+#### /etc/shadow
+```
+accout：登錄名
+encrypted password：加密的密碼
+    1. $ 加密類型 $ salt $ 加密後密碼
+    2. *  此用戶鎖定，不允許登錄
+    3. !! 不允許登錄(在此欄中最前面加上!!)
+days since Jan 1, 1970 that password was last changed：
+    密碼上次修改的時間距1970.01.01已經過了多少天
+days before password may be changed
+    密碼最少使用天數，0表示不做限定
+days after which password must be changed
+    密碼最長使用期限
+days before password is to expire that user is warned
+    密碼還有多少天過期
+days after password expires that account is disabled
+    密碼過期後多少天才禁用
+days since Jan 1, 1970 that account is disabled
+    密碼離1970.01.01多少天後禁用
+a reserved field
+    保留字段，沒有具體意義
+```
+
+<span id="useradd_groupadd"></span>
+### useradd/groupadd
+`useradd USERNAME`
+`groupadd GROUPNAME`
+```
+[root@localhost flying]# which useradd
+/usr/sbin/useradd
+[root@localhost flying]# type useradd
+useradd is /usr/sbin/useradd
+[root@localhost flying]# ls -l `which useradd`
+-rwxr-x---. 1 root root 103096 Oct 15 21:34 /usr/sbin/useradd
+[root@localhost flying]# ls -l `which adduser`
+lrwxrwxrwx. 1 root root 7 Feb  9 03:49 /usr/sbin/adduser -> useradd
+[root@localhost flying]# cd /etc/default/
+[root@localhost default]# ls
+nss  useradd
+[root@localhost default]# file useradd 
+useradd: ASCII text
+[root@localhost default]# cat useradd 
+# useradd defaults file
+GROUP=100
+HOME=/home
+INACTIVE=-1
+EXPIRE=
+SHELL=/bin/bash
+SKEL=/etc/skel
+CREATE_MAIL_SPOOL=yes
+
+[root@localhost default]#
+```
+
+```
+[root@localhost flying]# cat /etc/shells
+/bin/sh
+/bin/bash
+/sbin/nologin
+/bin/dash
+[root@localhost flying]#
+```
+
+#### 加密方法
+```
+對稱加密：加密、解密使用同一個密碼
+公鑰加密：每個密碼都成對出現，一個私鑰(secret key)，一個公鑰(pubic key)
+單向加密，散列加密(指紋加密)：提取數據特徵碼（非可逆，多用於數據完整性校驗）
+    1：雪崩效應：
+    2：定長輸出：
+        MD5：Message Digest，128位定長輸出；
+        SHA1：Secure Hash Algorithm，160位定長輸出
+
+```
+
+#### 用戶管理命令
+```
+用戶管理：
+useradd
+userdel
+usermod
+passwd
+chsh
+chfn
+finger
+id
+chage
+
+用戶組管理：
+groupadd
+groupdel
+groupmod
+gpasswd
+
+用戶權限管理：
+chown
+chgrp
+chmod
+umask
+```
+
+
+---
+
+**Note Time**：2015.02.15 13:55 Sunday 上海
+
+---
+
+`Blog Url`:<http://qingtianjiedu.com/blog/magedu_linux_learn_note_10/>
+`Release Time`:2015-02-15
+`BackUpTime`:2015.11.06 17:33

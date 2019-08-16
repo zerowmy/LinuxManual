@@ -1,0 +1,17 @@
+﻿3.3.5 /etc/nsswitch.conf 配置名字解析器
+/etc/nsswitch.conf 文件是由 Sun 公司开发并用于管理系统中多个配置文件查
+找的顺序 它比/etc/host.conf 文件提供了更多的功能 /etc/nsswitch.conf 中
+的每一行或者是注释(以#号开头)或者是一个关键字后跟冒号和一系列要试用
+的有顺序的方法 每一个关键字是在/etc/目录可以被/etc/nsswitch.conf 控制
+的/etc 文件的名字 下面是可以被包含的关键字
+aliases 邮件别名
+passwd 系统用户
+group 用户组
+shadow 隐蔽口令
+hosts 主机名和 I P地址
+networks 网络名和号
+protocols 网络协议
+services 端口号和服务名称
+ethers 以太网号
+rpc 远程进程调用的名称和号
+netgroup 网内组

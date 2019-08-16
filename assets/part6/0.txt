@@ -1,0 +1,221 @@
+-----------CentOS网卡配置----------
+     设置IP地址和网关及DNS
+		CentOS7里面的网卡名称不在是eth0,1,2而改成enoxxxxxx的格式，en代表的是enthernet以太网，o代表onboard内置，这种新的方式不但长，而且难记，不过优点也比较突出，有编号唯一性，迁移系统的时候不容易出错，网卡名称可以改动，下面会介绍。
+	服务管理
+
+	systemd对Linux来说，就是init程序，可以作为sysvinit和upstat的替代，centos服务管理主要命令是systemctl，centos7的服务不再放在/etc/init.d/下;而放在/usr/lib/systemd/system下，centos7系统中systemctl管理工具整合了chkconfig和service于一体。
+	
+      开始编写
+	vi /etc/sysconfig/network-script/ifcfg-e(tab补全，CentOS6与7不同)
+	
+	TYPE=Ethernet		  #以太网
+	DEVICE=ensxxxxxxx	  #
+	NAME=ens33		  #CentOS7的默认的网卡名
+	UUID=xxxxxxxxxx		  #这个可以去掉
+	BOOTPROTO=static	  #网络类型有static  dhcp  none
+	ONBOOT=yes		  #修改ONBOOT为yes：自动启用网络连接NO：代表关闭
+
+	IPADDR1=192.168.45.128	  #网卡IP
+	NETMASK=255.255.255.0	  #子网掩码也可以用PREFIX=24，根据你自己的子网掩码的进制数改变
+	GATEWAY=192.168.45.1	  #GATEWAY设置网关 必须和IP地址同一网段
+
+	PEERDNS=yes		  #是否接受DHCP服务其指定的DNS的地址，如果为yes就要配置DNS1的值，在/etc/resolv.conf中就不用这配置
+	DNS1=144.144.144.144	  #DNS可以设置多个，在DNS后面加数字依次排序
+
+      :wq!退出保存
+	systemctl restart network #重启网络;CentOS6.x是用  service network restart
+	ip a  或者 ifconfig 或者 nmtui connect show   #查看网络配置，具体看有没有安装相关repm包
+	
+-----------服务常用命令----------
+      
+	systemctl  start  服务名      立即开启
+	systemctl  stop  服务名      立即关闭
+	systemctl  restart  服务名    重启服务
+	systemctl  status  服务名    输出运行状态
+	systemctl  is-enabled  服务名  检查是否配置为自动自启
+	systemctl  enable  服务名    开机自动启动
+	systemctl  disable  服务名    取消开机自动启动
+	reboot  重启系统  init6等
+	poweroff  退出系统并停止电源
+	systemctl list-unit-files |grep sshd 查看sshd类型单元
+
+      SysV服务管理系统 例如 RedHat6等发行版
+
+	service --status-all 查看所有服务
+	service servicename status 查看指定服务状态
+	service servicename start|stop|restart 启动|停止|重启 指定服务
+	
+      systemd服务管理系统 如CentOS 7等
+
+	systemctl is-enabled servicename.service #查询服务是否开机启动
+	systemctl enable *.service #开机运行服务
+	systemctl disable *.service #取消开机运行
+	systemctl start *.service #启动服务
+	systemctl stop *.service #停止服务
+	systemctl restart *.service #重启服务
+	systemctl reload *.service #重新加载服务配置文件
+	systemctl status *.service #查询服务运行状态
+	systemctl --failed #显示启动失败的服务
+
+-----------环境变量配置-----------
+	以java为例，先下载java压缩包，再解压，再把解压的的目录或者文件添加到/etc/profile文件中
+	vi /etc/profile
+	#set java environment
+	JAVA_HOME=/usr/local/java/jdk1.8.0_181
+	JRE_HOME=$JAVA_HOME/jre
+	CLASS_PATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+	PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
+	GTK=/usr/include/
+	export JAVA_HOME JRE_HOME CLASS_PATH PATH GTK
+
+	source /etc/profile  或者 .  /etc/profile	#是配置文件生效
+	如果profile文件配置错误，使用.  /etc/profile使bash不能执行，执行 export PATH=/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin命令恢复文件
+
+-------------宝塔面板------------
+    yum install -y wget && wget -O install.sh http://download.bt.cn/install/install.sh && sh install.sh
+
+Warning:
+If you cannot access the panel, 
+release the following port (8888|888|80|443|20|21) in the security group
+
+宝塔软件Mysql自动生成密码忘记或者没看到解决方案
+如果没有复制自动生成的密码，怎么办？在哪里查询？？
+
+默认密码查询：
+    cat /www/server/panel/default.pl
+强制修改面板密码,如要改成123456：
+    cd /www/server/panel && python tools.pyc panel 123456
+强制修改MySQL root密码，如要改成123456: 
+    cd /www/server/panel && python tools.pyc root 123456
+
+修改密码
+	update user set password=password("root") where user = "root";
+	flush privileges;
+修改默认字符集
+	修改mysql的my.cnf文件中的字符集键值（注意配置的字段细节）：
+
+	1、在[client]字段里加入default-character-set=utf8，如下：
+	[client]
+	port = 3306
+	default-character-set=utf8
+	socket = /var/lib/mysql/mysql.sock
+
+	2、在[mysqld]字段里加入character-set-server=utf8，如下：
+
+	[mysqld]
+	port = 3306
+	socket = /var/lib/mysql/mysql.sock
+	character-set-server=utf8
+
+	3、在[mysql]字段里加入default-character-set=utf8，如下：
+
+	[mysql]
+	no-auto-rehash
+	default-character-set=utf8
+
+
+	4、注释掉sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES；
+
+	修改完成后，service mysql restart重启mysql服务就生效。注意：[mysqld]字段与[mysql]字段是有区别的。
+	这点在网上没人反馈过。
+	使用SHOW VARIABLES LIKE ‘character%’;查看，发现数据库编码全已改成utf8。
+
+-----------CentOS6.x防火墙配置及打开Mysql远程权限---------------
+	//mysql开启远程连接
+	第一步:授权
+	use mysql;
+	select user, host from user;
+	grant all privileges on *.* to 'root'@'%' identified by 'root' with grant option;
+	select user, host from user;
+
+	第二步:打开防火墙的端口3306(Mysql默认)在centos6版本中
+	vi /etc/sysconfig/iptables   #进入iptables修改配置文件增加3306端口
+	service iptables restart     #修改配置文件要重启使修改生效
+
+--------防火墙配置CentOS7.x-----------
+
+	1、查看firewall服务状态
+	systemctl status firewalld
+
+	2、查看firewall的状态
+
+	firewall-cmd --state
+
+	3、开启、重启、关闭、firewalld.service服务
+
+	# 开启
+	service firewalld start
+	# 重启
+	service firewalld restart
+	# 关闭
+	service firewalld stop
+	4、查看防火墙规则
+
+	firewall-cmd --list-all 
+
+	5、查询、开放、关闭端口
+
+	# 查询端口是否开放
+	firewall-cmd --query-port=8080/tcp
+	# 开放80端口
+	firewall-cmd --permanent --add-port=80/tcp
+	# 移除端口
+	firewall-cmd --permanent --remove-port=8080/tcp
+
+	#重启防火墙(修改配置后要重启防火墙)
+	firewall-cmd --reload
+
+	# 参数解释
+	1、firwall-cmd：是Linux提供的操作firewall的一个工具；
+	2、--permanent：表示设置为持久；
+	3、--add-port：标识添加的端口；
+
+-------CentOS搭建本地仓库----------
+	mkdir -p /usr/local/Local.YumBackage		#创建仓库目录文件夹(名称可以自己定)
+	remove *.remp /usr/local/Local.YumBackage	#把收集的remp包移动到仓库目录
+
+	cd /etc/yum.repo.d/
+	mkdir repo && mv *.repo repo
+	
+	vi Local.repo	#创建Local.repo源文件并编写配置
+	
+	[Local]		#源名称
+	name=Local.Yum	#仓库名称
+	baseurl=file:///usr/local/Local.YumBackage	#仓库位置，注意file可以改成http
+	gpgcheck=0	#是否检查 0否  1是
+	enabled=1	#是否可以执行安装
+
+	yum -y install createrepo	#安装创建repo索引的包
+	createrepo //usr/local/Local.YumBackage #为仓库目录的repo文件包创建索引
+	yum clean all		#清除原来在/etc/yum.repo.d/中的索引缓存
+	yum makecache		#为/etc/yum.repo.d/Local.repo源文件指定的baseurl创建缓存
+
+	yum --list		#检测仓库搭建好了没有
+
+
+-----------sh的脚本编写---------------
+      开始编写脚本第一行都是#!/bin/bash开始，注意bash可以换成其它的执行shell，例如python，sh，cbash……
+	例如，编写查看历史内存使用情况，可以编写sh
+	vi memory.sh
+	#!/bin/bash
+	echo "--------------------------------------------------------"  >>ram.txt
+	date +%Y-%d-%m__%H:%M:%S >>ram.txt
+	free -mh >>ram.txt
+	:wq! #exit  save
+	chmod 755 ./memory.sh	#是脚本具有执行权限
+
+	yum -y install crontabs	#安装定时执行的任务的包
+	crontab -e		#编写定时执行的任务类似vi编写
+	1 2 * * * /root/memory.sh #没天的02:00点的开始每隔1分钟执行一次memory.sh
+	systemctl restart crond	#启动crontab或者service crond start
+
+	crontab -r //删除全部任务调度工作
+
+-----------------------------
+
+
+	其它常用相关命令
+	free -mh	#查看内存使用情况
+	ps -ef		#静态查看进程
+	netstat -ntlp	#查看相关进程及相关ip，n数字t是TCP协议，l是listen监听的端口，p是Program即进程
+

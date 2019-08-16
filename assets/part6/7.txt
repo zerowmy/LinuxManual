@@ -1,0 +1,14 @@
+# [馬哥Linux]視頻學習筆記7——Linux文件管理命令詳解
+
+
+暫空着，後補
+
+---
+
+**Note Time**：2015.02.* *：* * 上海
+
+---
+
+`Blog Url`:<http://qingtianjiedu.com/blog/magedu_linux_learn_note_7/>
+`Release Time`:2015-02-08
+`BackUpTime`:2015.11.06 15:25

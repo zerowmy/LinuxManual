@@ -1,0 +1,25 @@
+﻿3.2.4 finger
+finger 命令的功能是查询用户的信息 通常会显示系统中某个用户的用户名
+主目录 停滞时间 登录时间 登录 shell 等信息 如果要查询远程机上的用
+户信息 需要在用户名后面接 @主机名 采用[用户名@主机名]的格式
+不过要查询的网络主机需要运行 finger 守护进程  该命令的一般格式为
+finger [选项] [使用者] [用户@主机]
+finger 的常用参数如下
+-s 显示用户的注册名 实际姓名 终端名称 写状态 停滞时间 登录
+时间等信息
+-l 除了用-s 选项显示的信息外 还显示用户主目录 登录 shell 邮件
+状态等信息 以及用户主目录下的.plan .project 和.forward 文件的
+内容
+-p 除了不显示.plan 文件和.project 文件以外与-l 选项相同
+示例
+1 显示用户 orcale 的信息
+finger oracle
+其显示结果为
+Login: oracle Name: (null)
+Directory: /home/oracle Shell: /bin/bash
+On since Fri Feb 6 16:26 (CST) on pts/1 from 10.153.21.166 33 seconds
+idle
+On since Wed Feb 4 20:10 (CST) on pts/2 from 10.153.21.166 1 second
+idle
+No mail.
+No Plan.

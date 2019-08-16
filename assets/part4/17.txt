@@ -1,0 +1,6 @@
+﻿4.5.1 文件查找命令 find
+find 命令用于查找文件系统中的指定文件 其命令格式为
+find 要查找的路径 表达式
+例如
+find . -name 1.txt 在当前目录及其子目录下查找文件 1.txt
+find /tmp -name 1.txt 在 /tmp 目录及其子目录下查找文件 1.txt

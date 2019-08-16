@@ -1,0 +1,46 @@
+<resources>
+
+    <string name="app_name">LinuxManual</string>
+    
+    <string name="part1">基命令行</string>
+    <string name="part2">文件查编</string>
+    <string name="part3">网络配置</string>
+    <string name="part4">使用技巧</string>
+    <string name="part5">数 据 库</string>
+    <string name="part6">基本运维</string>
+    
+    <string name="about">关于</string>
+    <string name="author">作者</string>
+    <string name="readMenu">阅读目录</string>
+    <string name="exit">退出</string>
+
+    <string name="readSet">阅读设置</string>
+    <string name="voiceRead">语音阅读</string>
+    
+    <string name="desc_author">Zero</string>
+    <string name="lab_net_name">网络名：</string>
+    <string name="net_name">月弦心</string>
+    <string name="lab_hobby">爱好：</string>
+    <string name="hobby">IT知识、游戏、看书</string>
+    <string name="lab_xingge">性格：</string>
+    <string name="xingge">敏感、固执、逃避、善良</string>
+       
+    <string name="about_version">Linux学习笔记    版本1.0</string>   
+    <string name="qq_email">：771698522@qq.com</string>   
+    <string name="qq_num">：771698522</string>   
+    <string name="about_thanks">致谢：开源社区光大群众</string>   
+    <string name="about_content">关于：这是一个Linux阅读APP，旨在大家巩固自己的基础能力，灵活解决问题能力还望大家自己多锻炼提升！此APP送给全国热爱Linux的人员，感谢大家一直坚持、默默付出为开源做贡献的广大人民群体！此处省略几千字，……什么玩意啊？</string>   
+    <string name="about_buttom">Linux趋势,无法阻挡!</string>   
+    
+    <string name="desc_author_pic">我是Picture</string>    
+    <string name="readset_content">我是文字设置界面，阅读文字设置在这里哦！</string>    
+    <string name="readset_barset">进度条设置</string>    
+    <string name="readset_fontsize">当前文字大小设置为:</string>    
+    <string name="readset_testfont">我是测试字体</string>    
+    <string name="readset_firstfont">一号字体</string>    
+    <string name="readset_secondfont">二号字体</string>    
+    <string name="readset_thirdfont">三号字体</string>    
+    <string name="readset_forthfont">四号字体</string>    
+    <string name="readset_fivedfont">五号字体</string>    
+
+</resources>

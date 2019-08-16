@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+		<!-- android:showAsAction="ifRoom|withText" -->
+	<item
+		android:showAsAction="ifRoom|withText"
+	    android:id="@+id/read_vioce"
+        android:title="@string/voiceRead"
+		android:icon="@android:drawable/ic_lock_silent_mode_off"
+	/>
+	<!--图标:   ic_media_play视频播放   ic_lock_silent_mode_off喇叭  ic_media_ff快进 -->
+</menu>

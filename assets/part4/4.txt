@@ -1,0 +1,5 @@
+﻿4.1.4 RPM升级操作
+命令
+rpm -U 需要升级的包
+举例如下
+rpm -Uvh example.rpm 升级 example.rpm软件包

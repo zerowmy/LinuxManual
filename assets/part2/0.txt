@@ -1,0 +1,9 @@
+﻿第 2 章 文件查看 / 编辑方法介绍
+2.1 cat 命令介绍
+cat 命令的原含义为连接 concatenate 用于连接多个文件内容并输出到
+标准输出流中 标准输出流默认为屏幕 实际运用过程中 我们常使用它
+来显示文件内容 如果您熟悉 MS-DOS 下的 type 命令 相信不难掌握 cat 命
+令 该命令的常用示例如下
+cat file1.txt  显示 file1.txt 文件的内容
+cat file1.txt file2.txt  显示 file1.txt 和 file2.txt 文件的内容
+cat -n file1.txt 显示 file1.txt 文件的内容 同时显示行号

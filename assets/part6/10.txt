@@ -1,0 +1,308 @@
+# [馬哥Linux]視頻學習筆記10——Linux bash特性詳解
+
+@(標籤)[bash|history|tab|alias|command|globbing]
+
+#### Tables Of Contents
+1. [bash及其特性](#bash及其特性) 
+2. [bash特性](#bash特性) 
+3. [命令行編輯](#命令行編輯) 
+4. [命令歷史history](#命令歷史history) 
+5. [命令歷史的使用技巧](#命令歷史的使用技巧) 
+6. [補全命令tab](#補全命令tab) 
+7. [命令別名alias](#命令別名alias) 
+8. [命令替換：\$(COMMAND)，反引號：\`COMMAND\`](#command) 
+9. [文件名通配符globbing](#文件名通配符globbing) 
+
+
+---
+
+
+#### bash及其特性
+
+shell：外殼
+GUI：Gnome，KDE，Xfce
+CLI：sh，csh，ksh，bash，tcsh，zsh
+首選bash
+root，student
+
+程序：進程
+
+進程：在每個進程看來，當前主機上只存在內核和當前進程。
+進程是程序的副本，進程是程序執行實例。
+(Linux允許一個用戶賬號登錄多次，每個打開的shell彼此獨立)
+
+用戶工作環境：
+bash：
+\# 管理員
+$ 普通用戶
+
+shell支持用戶自我定義自有環境
+shell是進程，也是web程序(可以啓動多次)
+shell中有shell和子shell概念
+
+````
+//gnome-terminal-─┬─bash───bash───bash───pstree
+
+[flying@localhost ~]$ type bash
+bash is /usr/bin/bash
+[flying@localhost ~]$ bash
+[flying@localhost ~]$ bash
+[flying@localhost ~]$ pstree
+systemd─┬─ModemManager─┬─{gdbus}
+        │              └─{gmain}
+       ...
+        ├─gnome-terminal-─┬─bash───bash───bash───pstree
+        │                 ├─gnome-pty-helpe
+        │                 ├─{dconf worker}
+        │                 ├─{gdbus}
+        │                 └─{gmain}
+       ...
+[flying@localhost ~]$
+```
+
+
+#### bash特性
+```
+bash特性：
+1. 支持命令歷史、命令補全
+2. 支持管道、重定向
+3. 支持命令別名
+4. 支持命令行編輯
+5. 支持命令行展開
+6. 支持文件名通配
+7. 支持變量
+8. 支持編程
+```
+
+#### 命令行編輯
+```
+光標跳轉：
+    Ctrl+a：跳到命令行首
+    Ctrl+e：跳到命令行尾
+    Ctrl+u：刪除光標至命令行首的內容
+    Ctrl+k：刪除光標至命令行尾的內容
+    Ctrl+l：清屏
+```
+
+#### 命令歷史history
+```
+查看命令歷史：history
+    -c：清空命令歷史
+    -d OFFSET [n]：刪除指定位置的命令 類似MySQL中的limit
+    -w：保存命令 歷史至歷史文件中
+
+[flying@localhost ~]$ type history
+history is a shell builtin
+[flying@localhost ~]$
+```
+
+>環境變量
+PATH：命令搜索路徑
+HISTSIZE：命令歷史緩衝區大小
+>
+保存地址： 用戶家目錄下 ~/.bash_history
+
+```
+[flying@localhost ~]$ echo $HISTSIZE
+1000
+[flying@localhost ~]$
+```
+
+#### 命令歷史的使用技巧
+```
+!n：     執行命令歷史中的第n條命令；
+!-n：    執行命令歷史中的倒數第n條命令；
+!!：     執行上一條命令
+!string：執行命令歷史中最近一個以指定字符串靠頭的命令
+!$：     引用前一個命令最後一個參數
+Esc,.    Esc 加 .  引用前一個命令最後一個參數
+Alt+.
+```
+
+```
+[flying@localhost ~]$ history
+    1  history
+    2  ls
+    3  pwd
+    4  type ls
+    5  clock
+    6  cal
+    7  date
+    8  history
+[flying@localhost ~]$ !7
+date
+Mon Feb  9 07:32:09 CST 2015
+[flying@localhost ~]$ !-2
+cal
+    February 2015   
+Su Mo Tu We Th Fr Sa
+ 1  2  3  4  5  6  7
+ 8  9 10 11 12 13 14
+15 16 17 18 19 20 21
+22 23 24 25 26 27 28
+
+[flying@localhost ~]$  
+
+
+//!$：   引用前一個命令最後一個參數
+//Esc,.  Esc 加 .  引用前一個命令最後一個參數
+[flying@localhost ~]$ ls -la
+total 24
+drwx------. 2 flying flying 4096 Feb  9 04:03 .
+drwxr-xr-x. 3 root   root   4096 Feb  9 04:02 ..
+-rw-------. 1 flying flying  157 Feb  9 07:15 .bash_history
+-rw-r--r--. 1 flying flying   18 Oct 16 21:56 .bash_logout
+-rw-r--r--. 1 flying flying  176 Oct 16 21:56 .bash_profile
+-rw-r--r--. 1 flying flying  124 Oct 16 21:56 .bashrc
+[flying@localhost ~]$ -la
+
+[flying@localhost ~]$ !$
+found
+bash: found: command not found
+[flying@localhost ~]$
+```
+
+#### 補全命令tab
+
+>命令補全、路徑補全
+1.命令補全
+PATH：
+搜索PATH環境變量所指定的每個路徑下以我們給出的字符串開頭的可執行文件，如果多於一個，兩次Tab，可以給出列表：否則將直接補全；
+>
+2.路徑補全
+搜索我們給出的起始路徑下的每個文件名，並試圖補全。
+
+```
+//命令補全 連按兩次tab
+[flying@localhost ~]$ cl
+clear      clock      clockdiff  
+[flying@localhost ~]$ cl
+```
+
+```
+//路徑補全 連按兩次tab
+[flying@localhost ~]$ cd /etc/sys
+sysconfig/          system-release      
+sysctl.conf         system-release-cpe  
+[flying@localhost ~]$ cd /etc/sys
+```
+
+
+#### 命令別名alias
+```
+臨時有效：
+    alias CMDALIAS=COMMAND
+或
+    alias CMDALIAS='COMMAND [options] [arguments]'
+
+* 在shell中定義的別名僅在當前shell生命週期中有效,
+  別名的有效範圍爲當前shell進程;
+```
+
+```
+[flying@localhost ~]$ 
+[flying@localhost ~]$ cal
+    February 2015   
+Su Mo Tu We Th Fr Sa
+ 1  2  3  4  5  6  7
+ 8  9 10 11 12 13 14
+15 16 17 18 19 20 21
+22 23 24 25 26 27 28
+
+
+[flying@localhost ~]$ rili
+bash: rili: command not found
+[flying@localhost ~]$ alias rili=cal
+[flying@localhost ~]$ rili
+    February 2015   
+Su Mo Tu We Th Fr Sa
+ 1  2  3  4  5  6  7
+ 8  9 10 11 12 13 14
+15 16 17 18 19 20 21
+22 23 24 25 26 27 28
+
+
+[flying@localhost ~]$ alias
+alias l.='ls -d .* --color=auto'
+alias ll='ls -l --color=auto'
+alias ls='ls --color=auto'
+alias rili='cal'
+alias vi='vim'
+...
+[flying@localhost ~]$ unalias rili
+[flying@localhost ~]$ rili
+bash: rili: command not found
+[flying@localhost ~]$ alias
+alias l.='ls -d .* --color=auto'
+alias ll='ls -l --color=auto'
+alias ls='ls --color=auto'
+alias vi='vim'
+...
+[flying@localhost ~]$
+```
+
+<span id="command"></span>
+#### 命令替換：\$(COMMAND)，反引號：\`COMMAND\`
+把命令中某個子命令替換爲其執行結果的過程
+
+```
+//$(COMMAND)
+[flying@localhost ~]$ echo "The current directory is $(pwd)."
+The current directory is /home/flying.
+[flying@localhost ~]$ 
+
+[flying@localhost ~]$ echo "Now is $(date)."
+Now is Mon Feb  9 08:37:32 CST 2015.
+[flying@localhost ~]$ 
+
+[root@localhost ~]# ls
+anaconda-ks.cfg  install.log  install.log.syslog
+[root@localhost ~]# touch ./file-$(date +%F-%H-%M-%S).txt
+[root@localhost ~]# ls
+anaconda-ks.cfg  file-2015-02-09-08-49-31.txt  install.log  install.log.syslog
+[root@localhost ~]# 
+
+
+//反引號：`COMMAND`
+[root@localhost ~]# echo "The current directory is `pwd`"
+The current directory is /root
+[root@localhost ~]#
+```
+
+>bash支持的引號：
+“：反引號，命令替換
+“”：雙引號，弱引用，可以實現變量替換
+”：單引號，不完成變量替換
+
+
+#### 文件名通配符globbing
+```
+*：匹配任意長度的任意字符
+?：匹配任意單個字符
+[]：匹配指定範圍內的任意單個字符
+    [abc],[a-z],[A-Z],[0-9],[a-zA-Z],[0-9a-zA-Z]
+    [:space:]：空白字符
+    [:punct:]：標點符號
+    [:lower:]：小寫字母
+    [:upper:]：大寫字母
+    [:alpha:]：大小寫字母
+    [:digit:]：數字
+    [:alnum:]：數字和大小寫字母 == [0-9a-zA-Z]
+
+[^]：匹配指定範圍之外的任意單個字符
+    [^0-9]表示非數字
+
+# man 7 glob
+```
+
+Bash拓展：[A Shell Primer: Master Your Linux, OS X, Unix Shell Environment](http://www.cyberciti.biz/howto/shell-primer-configuring-your-linux-unix-osx-environment/)
+
+---
+
+**Note Time**：2015.02.09 17:32 Monday 上海
+
+---
+
+`Blog Url`:<http://qingtianjiedu.com/blog/magedu_linux_learn_note_10/>
+`Release Time`:2015-02-09
+`BackUpTime`:2015.11.06 16:32

@@ -1,0 +1,163 @@
+# [馬哥Linux]視頻學習筆記2——操作系統基礎
+
+
+#### Tables Of Contents
+1. [啓動過程](#啓動過程) 
+2. [計算機體系結構](#計算機體系結構) 
+3. [硬件架構](#硬件架構) 
+4. [Operating System](#operating-system) 
+
+計算機相關
+
+#### 啓動過程
+```
+1. POST：Power On Self Tes 加電自檢
+2. 自舉 BIOS
+3. 程序：指令+數據
+```
+
+
+#### 計算機體系結構
+```
+1. 運算器（加法器，邏輯運算器）
+2. 控制器
+3. 存儲器：內存，編址（內存是編址的存儲單元）
+4. 輸入設備
+5. 輸出設備
+```
+
+加法器：加數，被加數（二進制，電路，邏輯學）
+
+RAM：Random-Access Memory 隨機存取存儲器
+
+ROM：Read Only Memory 只讀存儲器
+
+>機器語言（二進制）
+微碼（彙編語言）–>編譯器
+高級語言
+
+API：Application Programming Interface 應用編程程序接口
+
+
+#### 硬件架構
+```
+1. ARM
+2. x86
+3. x64
+4. 安騰
+5. alpha
+6. UltraSparc
+7. Power
+8. M68000,M68K 摩托羅拉生產
+9. PowerPC：Performance Optimization With Enhanced RISC -Performance Computing
+```
+
+#### Operating System
+```
+1. Windows
+2. Linux
+3. Unix
+    HP-UX      惠普
+    Solaris    Sun
+    AIX        IBM
+    SCO UNIX
+    Unixware
+4. OS/2
+```
+
+OS內核功能
+```
+1. 進程管理
+2. 內存管理
+3. 文件系統
+4. 網絡功能
+5. 硬件驅動
+6. 安全機制
+```
+
+批處理系統
+
+GE、Bell、MIT合作開發多進程、多任務、多用戶系統
+使用彙編語言開發
+
+大型機 MainFrame
+Multics：MULTiplexed Information and Computing System
+
+Ken，
+Space Travel
+
+DEC：
+PDP-11，PDP-7
+VAX –> vms
+
+Unics –> Unix 與Multics相反
+
+Ken1976年去加州.伯克利任教
+Bill Joy： 研究成果 –> BSRG
+BSD：Berkeley Software Distribution
+
+Syetem V
+
+1981，Microsfot，Xenix
+
+CP/M–>DOS–>
+
+jobs喬布斯
+
+Xerox（施樂）：一家生產複印機的公司
+PARK
+
+FreeBSD 專注運行在PC機上的正統Uuix
+OpenBSD 專注於安全
+NetBSD 專注於服務
+
+Bill Joy聯合其他人成立了Sun公司(Stanford University Network縮寫)
+Sun MicroSystem
+Sun OS –> Solaris
+
+Windows NT 引入Server功能
+
+荷蘭大學教授 Andrew -> Minix
+
+Linus: -> Linux
+
+80年代，Stallman，Freedom
+成立組織GUN： GUN is Not Unix
+宣言GPL: General Public License
+
+Emacs：文本編輯器
+gcc：GUN C Complier
+bash：
+
+Linux: glibc,gcc
+
+GUN/Linux
+源代碼：c–>編譯成二進制（交叉編譯）
+
+ABI： Application Binary Interface
+
+1991 SLS
+1992 Debian
+1993 RedHat
+SUSE –> Novell (Netware)
+
+發行商： release
+
+kernel：2w
+
+Debian, dpt
+RedHat, rpm
+
+RedHat
+CentOS: Community Enterprise OS
+Fedora:
+Mandrive:
+
+
+**Note Time**：2015.02.03 14:20 上海
+
+---
+
+`Blog Url`:<http://qingtianjiedu.com/blog/magedu_linux_learn_note_2/>
+`Release Time`:2015-02-03
+`BackUpTime`:2015.11.06 14:25
